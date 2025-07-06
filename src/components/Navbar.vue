@@ -52,7 +52,7 @@ a {
 }
 a:hover {
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     transform: scale(1.15);
 }
 .active {

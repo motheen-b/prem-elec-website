@@ -28,8 +28,9 @@
     border-top-right-radius: 15px;
 }
 .header-text {
+    display: flex;
     font-size: 28px;
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     color: white;

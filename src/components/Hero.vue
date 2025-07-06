@@ -27,16 +27,32 @@
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
+.hero-content::before {
+    content: ""; /* Required */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    border-radius: 15px;
+}
 .hero-content {
     display: flex;
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
     gap: 1.5rem;
     flex-direction: column;
     justify-content: center;
     font-family: 'Inter', sans-serif;
+    border-radius: 15px;
 
 }
 .hero-text {
     display: flex;
+    z-index: 3;
     flex-direction: column;
     gap: 1.5rem;
     color: white;
@@ -49,6 +65,7 @@
 .button {
     display: inline-block;
     align-self: flex-start; 
+    z-index: 4;
     border: 1px solid black;
     border-radius: 15px;
     padding: 0.5rem 1.25rem;

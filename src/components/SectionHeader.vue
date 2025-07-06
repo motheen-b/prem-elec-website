@@ -19,9 +19,11 @@ defineProps({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 .section-header {
     text-align: center;
     margin: 2rem 0;
+    font-family: 'Inter', 'sans-serif';
 }
 
 .line-title {

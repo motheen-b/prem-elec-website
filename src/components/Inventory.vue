@@ -5,13 +5,18 @@
     />
 
     <div class="catalog">
-      <div class="product-card" v-for="product in paginatedProducts" :key="product.id">
-        <img :src="product.image_url" alt="Product Image" class="product-image" />
+      <div 
+        class="product-card" 
+        v-for="product in paginatedProducts" 
+        :key="product.id" 
+        @click="openModal(product)"
+      >
+        <img :src="product.image_url" alt="Product Image" class="product-image"/>
         <div class="product-details">
           <h2>{{ product.name }}</h2>
           <p class="price">${{ product.price.toFixed(2) }} {{ product.currency }}</p>
           <p class="stock" :class="{ soldout: !product['in-stock'] }">
-            {{ product['in-stock'] ? 'In Stock' : 'Sold Out' }}
+            {{ product['in-stock'] ? 'In Stock' : 'Sold' }}
           </p>
         </div>
       </div>
@@ -32,12 +37,32 @@
 
       <button :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">Next</button>
     </div>
+
+    <ItemModal
+      :show="showModal"
+      @close="showModal = false"
+      :imageURL="selectedProduct?.image_url"
+      :title="selectedProduct?.name"
+      :price="selectedProduct?.price"
+      :description="selectedProduct?.description"
+    />
+
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import SectionHeader from './SectionHeader.vue'
+import ItemModal from './ItemModal.vue'
 import axios from 'axios'
+
+const showModal = ref(false)
+
+const selectedProduct = ref(null)
+
+const openModal = (product) => {
+  selectedProduct.value = product
+  showModal.value = true
+}
 
 const products = ref([])
 const currentPage = ref(1)
@@ -51,6 +76,11 @@ onMounted(async () => {
     console.error('Error loading products:', err)
   }
 })
+
+function detectCondition(description) {
+  const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
+  return match ? match[0] : "Customer Returns";
+}
 
 // Sort in-stock first
 const sortedProducts = computed(() =>
