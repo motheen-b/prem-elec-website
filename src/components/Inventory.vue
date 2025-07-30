@@ -70,7 +70,7 @@ const itemsPerPage = 20
 
 onMounted(async () => {
   try {
-    const res = await axios.get('http://localhost:8000/')
+    const res = await axios.get('http://localhost:8000/catalog')
     products.value = res.data.products
   } catch (err) {
     console.error('Error loading products:', err)
@@ -136,6 +136,7 @@ const goToPage = (page) => {
   width: 100%;
   height: 425px;
   object-fit: cover;
+  /* object-position: center; */
 }
 
 .product-details {
