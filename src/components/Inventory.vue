@@ -1,51 +1,32 @@
 <template>
-    <SectionHeader
-      title="Explore Our Inventory"
-      subtitle="Browse our latest liquidation pallets — updated daily."
-    />
+  <SectionHeader title="Explore Our Inventory" subtitle="Browse our latest liquidation pallets — updated daily." />
 
-    <div class="catalog">
-      <div 
-        class="product-card" 
-        v-for="product in paginatedProducts" 
-        :key="product.id" 
-        @click="openModal(product)"
-      >
-        <img :src="product.image_url" alt="Product Image" class="product-image"/>
-        <div class="product-details">
-          <h2>{{ product.name }}</h2>
-          <p class="price">${{ product.price.toFixed(2) }} {{ product.currency }}</p>
-          <p class="stock" :class="{ soldout: !product['in-stock'] }">
-            {{ product['in-stock'] ? 'In Stock' : 'Sold' }}
-          </p>
-        </div>
+  <div class="catalog">
+    <div class="product-card" v-for="product in paginatedProducts" :key="product.id" @click="openModal(product)">
+      <img :src="product.image_url" alt="Product Image" class="product-image" />
+      <div class="product-details">
+        <h2>{{ product.name }}</h2>
+        <p class="price">${{ product.price.toFixed(2) }} {{ product.currency }}</p>
+        <p class="stock" :class="{ soldout: !product['in-stock'] }">
+          {{ product['in-stock'] ? 'In Stock' : 'Sold' }}
+        </p>
       </div>
     </div>
+  </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-      <button :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">Prev</button>
+  <!-- Pagination -->
+  <div class="pagination">
+    <button :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">Prev</button>
 
-      <button
-        v-for="page in totalPages"
-        :key="page"
-        :class="{ active: currentPage === page }"
-        @click="goToPage(page)"
-      >
-        {{ page }}
-      </button>
+    <button v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }" @click="goToPage(page)">
+      {{ page }}
+    </button>
 
-      <button :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">Next</button>
-    </div>
+    <button :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">Next</button>
+  </div>
 
-    <ItemModal
-      :show="showModal"
-      @close="showModal = false"
-      :imageURL="selectedProduct?.image_url"
-      :title="selectedProduct?.name"
-      :price="selectedProduct?.price"
-      :description="selectedProduct?.description"
-    />
+  <ItemModal :show="showModal" @close="showModal = false" :imageURL="selectedProduct?.image_url"
+    :title="selectedProduct?.name" :price="selectedProduct?.price" :description="selectedProduct?.description" />
 
 </template>
 
@@ -127,6 +108,7 @@ const goToPage = (page) => {
   transition: transform 0.2s ease;
   font-family: 'Inter', sans-serif;
 }
+
 .product-card:hover {
   transform: translateY(-6px);
   cursor: pointer;
@@ -173,6 +155,7 @@ h2 {
   gap: 0.5rem;
   margin: 2rem 0;
 }
+
 .pagination button {
   padding: 0.4rem 0.8rem;
   border: none;
@@ -181,10 +164,12 @@ h2 {
   cursor: pointer;
   font-weight: bold;
 }
+
 .pagination button.active {
   background-color: #2c3e50;
   color: white;
 }
+
 .pagination button:disabled {
   opacity: 0.5;
   cursor: not-allowed;

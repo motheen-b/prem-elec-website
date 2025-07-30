@@ -10,9 +10,9 @@
             <div class="item-info-container">
                 <div class="item-title">{{ title }}</div>
                 <!-- <div class="item-description">{{ description }}</div> -->
-                 <div class="condition-container">
+                <div class="condition-container">
                     {{ detectCondition(description) }}
-                 </div>
+                </div>
                 <div class="item-description">{{ description }}</div>
             </div>
         </div>
@@ -30,8 +30,8 @@ defineProps({
 defineEmits(['closeModal'])
 
 function detectCondition(description) {
-  const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
-  return match ? match[0] : "Customer Returns";
+    const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
+    return match ? match[0] : "Customer Returns";
 }
 </script>
 
@@ -49,6 +49,7 @@ function detectCondition(description) {
     font-family: 'Inter', sans-serif;
     background: rgba(0, 0, 0, 0.6);
 }
+
 .modal {
     gap: 20px;
     width: 90%;
@@ -61,14 +62,17 @@ function detectCondition(description) {
     flex-direction: column;
     background-color: rgb(218, 236, 247);
 }
+
 .logo {
     display: flex;
     justify-content: center;
 }
+
 .logo img {
     width: 200px;
     height: auto;
 }
+
 .item img {
     width: 350px;
     height: auto;
@@ -80,11 +84,13 @@ function detectCondition(description) {
     border: 1px solid red;
     gap: 0.5rem;
 }
+
 .item-title {
     font-weight: 600;
     font-size: 20px;
 
 }
+
 .item-description {
     font-size: 14px;
     white-space: pre-line;
@@ -92,7 +98,7 @@ function detectCondition(description) {
 
 .condition-container {
     display: inline-block;
-    align-self: flex-start; 
+    align-self: flex-start;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -104,5 +110,4 @@ function detectCondition(description) {
     border-radius: 15px;
     background-color: green;
 }
-
 </style>

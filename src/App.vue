@@ -1,18 +1,23 @@
 <template>
+  <Navbar />
   <div class="main-container">
     <header>
-      <InfoHeader />
-      <Navbar />
+      <!-- <InfoHeader /> -->
+      <!-- <Navbar /> -->
     </header>
     <main>
       <router-view />
     </main>
+    <!-- <Footer /> -->
   </div>
+  <InfoFooter />
 </template>
 
 <script setup>
 import InfoHeader from './components/InfoHeader.vue';
 import Navbar from './components/Navbar.vue';
+import Footer from './components/Foot.vue';
+import InfoFooter from './components/InfoFooter.vue';
 </script>
 
 <style scoped>

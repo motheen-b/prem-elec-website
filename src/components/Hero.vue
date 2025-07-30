@@ -4,7 +4,8 @@
             <div class="hero-text">
                 <h4>Welcome to Premium Electronics</h4>
                 <h1>Discounted Electronics & Wholesale Pallets</h1>
-                <p>Premium returns & overstock. Single items to full pallets. Pickup & delivery available.</p>
+                <p>724 Caledonia Rd, North York, ON, M6B 3X7</p>
+                <p>(647) 901 7565 - Adam</p>
             </div>
             <div class="button">Browse</div>
         </div>
@@ -34,7 +35,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1;
     border-radius: 15px;
 }
