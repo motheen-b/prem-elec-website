@@ -77,15 +77,19 @@ onMounted(async () => {
   }
 })
 
-function detectCondition(description) {
-  const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
-  return match ? match[0] : "Customer Returns";
-}
+const sortedProducts = computed(() => {
+  const inStockReversed = products.value
+    .filter(p => p['in-stock'])
+    .slice() // ensure copy
+    .reverse()
 
-// Sort in-stock first
-const sortedProducts = computed(() =>
-  [...products.value].sort((a, b) => b['in-stock'] - a['in-stock'])
-)
+  const outOfStockReversed = products.value
+    .filter(p => !p['in-stock'])
+    .slice()
+    .reverse()
+
+  return [...inStockReversed, ...outOfStockReversed]
+})
 
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
