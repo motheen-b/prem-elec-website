@@ -47,9 +47,7 @@ const contactDetails = [
     position: relative;
     width: 100%;
     height: 100px;
-    /* padding: 5px; */
     background-color: #032C50;
-    /* border: 2px solid green; */
     font-family: 'Inter', 'sans-serif';
 }
 

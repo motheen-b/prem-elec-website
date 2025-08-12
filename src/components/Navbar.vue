@@ -10,7 +10,6 @@
             <router-link to="/about" active-class="active">About</router-link>
             <router-link to="/contact" active-class="active">Contact</router-link>
             <router-link to="/faq" active-class="active">F.A.Q.</router-link>
-            <router-link to="/testimonials" active-class="active">Testimonials</router-link>
         </div>
 
         <div class="socials">

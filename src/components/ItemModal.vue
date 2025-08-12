@@ -64,6 +64,7 @@ function detectCondition(description) {
     border-radius: 15px;
     flex-direction: column;
     background-color: rgb(218, 236, 247);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
@@ -95,6 +96,7 @@ function detectCondition(description) {
 .item img {
     width: 300px;
     height: auto;
+    max-height: 400px;
 }
 
 .item-info-container {
@@ -107,7 +109,7 @@ function detectCondition(description) {
 
 .item-title {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
 
 }
 
