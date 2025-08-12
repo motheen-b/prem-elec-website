@@ -25,24 +25,34 @@
     <button :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">Next</button>
   </div>
 
-  <ItemModal :show="showModal" @close="showModal = false" :imageURL="selectedProduct?.image_url"
+  <ItemModal :show="showModal" @close="closeModalHandler" :imageURL="selectedProduct?.image_url"
     :title="selectedProduct?.name" :price="selectedProduct?.price" :description="selectedProduct?.description" />
 
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import SectionHeader from './SectionHeader.vue'
 import ItemModal from './ItemModal.vue'
 import axios from 'axios'
 
+const router = useRouter()
+const route = useRoute()
 const showModal = ref(false)
-
 const selectedProduct = ref(null)
 
 const openModal = (product) => {
   selectedProduct.value = product
   showModal.value = true
+  router.push({ query: { ...route.query, item: product.id } })
+}
+
+function closeModalHandler() {
+  showModal.value = false
+  const query = { ...route.query }
+  delete query.item
+  router.replace({ query })
 }
 
 const products = ref([])
@@ -53,6 +63,13 @@ onMounted(async () => {
   try {
     const res = await axios.get('http://localhost:8000/catalog')
     products.value = res.data.products
+    if (route.query.item) {
+      const product = products.value.find(p => p.id == route.query.item)
+      if (product) {
+        selectedProduct.value = product
+        showModal.value = true
+      }
+    }
   } catch (err) {
     console.error('Error loading products:', err)
   }
@@ -61,7 +78,7 @@ onMounted(async () => {
 const sortedProducts = computed(() => {
   const inStockReversed = products.value
     .filter(p => p['in-stock'])
-    .slice() // ensure copy
+    .slice()
     .reverse()
 
   const outOfStockReversed = products.value

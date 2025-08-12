@@ -67,13 +67,13 @@
     display: inline-block;
     align-self: flex-start; 
     z-index: 4;
-    border: 1px solid black;
+    border: 1px solid #110135;
     border-radius: 15px;
     padding: 0.5rem 1.25rem;
     font-size: 24px;
     font-weight: 700;
     color: white;
-    background-color: #110135;
+    background-color: #032C50;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .button:hover {
@@ -87,6 +87,6 @@ h4 {
     font-size: 20px;
 }
 p {
-    font-size: 18px;
+    font-size: 20px;
 }
 </style>

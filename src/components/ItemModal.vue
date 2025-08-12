@@ -1,15 +1,15 @@
 <template>
-    <div class="overlay" v-if="show">
+    <div class="overlay" v-if="show" @click.self="closeModal">
         <div class="modal">
             <div class="logo">
                 <img src="@/assets/logo-2.png" alt="">
+                <div class="exit" @click.self="closeModal" style="color:red; font-size: 35px;">&times;</div>
             </div>
             <div class="item">
                 <img :src="imageURL" alt="">
             </div>
             <div class="item-info-container">
                 <div class="item-title">{{ title }}</div>
-                <!-- <div class="item-description">{{ description }}</div> -->
                 <div class="condition-container">
                     {{ detectCondition(description) }}
                 </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['close'])
 defineProps({
     show: Boolean,
     imageURL: String,
@@ -27,7 +28,10 @@ defineProps({
     description: String,
     price: Number,
 })
-defineEmits(['closeModal'])
+
+function closeModal() {
+  emit('close')
+}
 
 function detectCondition(description) {
     const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
@@ -51,10 +55,9 @@ function detectCondition(description) {
 }
 
 .modal {
-    gap: 20px;
+    gap: 10px;
     width: 90%;
     display: flex;
-    padding: 2rem;
     max-width: 400px;
     text-align: center;
     position: relative;
@@ -65,7 +68,23 @@ function detectCondition(description) {
 
 .logo {
     display: flex;
+    padding: 10px;
     justify-content: center;
+}
+
+.exit {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 5px;
+    font-size: 25px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.exit:hover {
+    cursor: pointer;
+    transform: scale(1.5);
 }
 
 .logo img {
@@ -74,7 +93,7 @@ function detectCondition(description) {
 }
 
 .item img {
-    width: 350px;
+    width: 300px;
     height: auto;
 }
 
@@ -82,6 +101,7 @@ function detectCondition(description) {
     display: flex;
     flex-direction: column;
     border: 1px solid red;
+    padding: 10px;
     gap: 0.5rem;
 }
 

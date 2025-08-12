@@ -10,7 +10,7 @@
             </div>
 
             <div class="contact-details">
-                <div class="detail" v-for="(info, index) in contactDetails" :key="info">
+                <div class="detail" v-for="(info, index) in contactDetails" :key="index">
                     {{ info }}
                     <span v-if="index < contactDetails.length - 1"> | </span>
                 </div>
@@ -40,9 +40,11 @@ const contactDetails = [
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 .container {
     display: flex;
     bottom: 0;
+    position: relative;
     width: 100%;
     height: 100px;
     /* padding: 5px; */
@@ -97,5 +99,4 @@ a:hover {
     color: white;
     justify-content: center;
 }
-
 </style>
