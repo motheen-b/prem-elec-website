@@ -3,7 +3,7 @@
         <div class="nav">
             <div class="nav-items">
                 <div class="logo">
-                    Premium Electronics
+                    <img src="../assets/logo-test.png" alt="">
                 </div>
                 <div class="router-items">
                     <router-link v-for="(route, index) in routes" :key="index" :to="route.path">
@@ -11,8 +11,8 @@
                     </router-link>
                 </div>
                 <div class="socials">
-            <img src="@/assets/instagram.svg" alt="">
-            <img src="@/assets/facebook.svg" alt="">
+                    <img src="@/assets/instagram.svg" alt="">
+                    <img src="@/assets/facebook.svg" alt="">
                 </div>
             </div>
         </div>
@@ -31,6 +31,8 @@ const routes = [
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 .container {
     display: flex;
@@ -39,7 +41,7 @@ const routes = [
     z-index: 1000;
     justify-content: center;
     width: 100%;
-    height: 70px;
+    height: 90px;
     background-color: #032C50;
 }
 
@@ -49,7 +51,7 @@ const routes = [
     width: 100%;
     max-width: 1440px;
     min-width: 320px;
-    font-family: 'Inter', 'sans-serif';
+    font-family: 'Montserrat', 'sans-serif';
 }
 
 .nav-items {
@@ -63,23 +65,35 @@ const routes = [
     align-items: center;
     flex-basis: 100%;
     position: fixed;
-    height: 70px;
+    height: 90px;
     left: 50%;
     transform: translateX(-50%);
     gap: 2rem;
 }
 
 a {
+    position: relative;
     color: white;
     font-size: 20px;
-    font-weight: 400;
     text-decoration: none;
     transition: transform 0.3s ease-in-out;
 }
 
-a:hover {
-    text-decoration: underline;
-    transform: scale(1.15);
+a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s cubic-bezier(.25, .8, .25, 1), left 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.router-items a:hover::after,
+.router-items a.router-link-active::after {
+    width: 100%;
+    left: 0;
 }
 
 .logo {
@@ -87,7 +101,10 @@ a:hover {
     align-items: center;
     color: white;
     flex-basis: 100%;
+}
 
+.logo img {
+    height: 50px;
 }
 
 .socials {
@@ -107,7 +124,6 @@ a:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
-
 </style>
 
 
