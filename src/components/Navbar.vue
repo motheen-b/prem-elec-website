@@ -3,7 +3,7 @@
         <div class="nav">
             <div class="nav-items">
 
-                <div class="hamburger" v-if="isMobile">
+                <div class="hamburger" v-if="isMobile" @click="toggleHamburger">
                     <img src="../assets/burger.svg" alt="">
                 </div>
 
@@ -34,12 +34,28 @@
             </div>
         </div>
     </div>
+    <Hamburger :show="showHamburger" @closeNav="showHamburger = false"/>
 </template>
 
 <script setup>
 import { useScreen } from '@/composables/useScreen';
+import { ref } from 'vue';
+import Hamburger from './Hamburger.vue';
 
-const { width, isMobile } = useScreen(1001);
+const { width, isMobile } = useScreen(1001)
+const showHamburger = ref(false)
+
+const toggleHamburger = () => {
+    showHamburger.value = !showHamburger.value
+}
+
+// const openHamburger = () => {
+//     showHamburger.value = true
+// }
+
+// const closeHamburger = () => {
+//     showHamburger.value = false
+// }
 
 const routes = [
     { name: 'Home', path: '/' },
