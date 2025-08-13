@@ -29,7 +29,10 @@ const router = createRouter({
     },
   ],
   scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }
+    if (to.path !== from.path) {
+      return { top: 0 }
+    }
+    return savedPosition || {}
   }
 })
 

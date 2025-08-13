@@ -10,7 +10,10 @@
             </div>
             <div class="item-info-container">
                 <div class="item-title">{{ title }}</div>
-                <div class="condition-container">
+                <div class="condition-container" :class="{
+                    returns: detectCondition(description) === 'Customer Returns',
+                    refurbished: detectCondition(description) === 'Refurbished'
+                }">
                     {{ detectCondition(description) }}
                 </div>
                 <div class="item-description">{{ description }}</div>
@@ -30,7 +33,7 @@ defineProps({
 })
 
 function closeModal() {
-  emit('close')
+    emit('close')
 }
 
 function detectCondition(description) {
@@ -65,6 +68,7 @@ function detectCondition(description) {
     flex-direction: column;
     background-color: rgb(218, 236, 247);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    animation: explodeIn 0.6s ease-out;
 }
 
 .logo {
@@ -130,6 +134,34 @@ function detectCondition(description) {
     height: auto;
     padding: 0.5rem;
     border-radius: 15px;
+}
+
+.condition-container.returns {
+    background-color: rgb(235, 162, 27);
+}
+
+.condition-container.refurbished {
     background-color: green;
+}
+
+@keyframes explodeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 </style>

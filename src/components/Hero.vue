@@ -45,9 +45,11 @@
 .hero-content {
     display: flex;
     position: relative;
+    align-self: center;
     z-index: 2;
     padding: 2rem;
     gap: 1.5rem;
+    height: 200px;
     flex-direction: column;
     justify-content: center;
     font-family: 'Inter', sans-serif;

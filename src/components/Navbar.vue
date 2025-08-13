@@ -11,8 +11,12 @@
                     </router-link>
                 </div>
                 <div class="socials">
-                    <img src="@/assets/instagram.svg" alt="">
-                    <img src="@/assets/facebook.svg" alt="">
+                    <a href="https://www.instagram.com/premium_electronics_ca" target="_blank" rel="noopener noreferrer">
+                        <img src="@/assets/instagram.svg" alt="Instagram">
+                    </a>
+                    <a href="https://www.facebook.com/electronics.liquidation" target="_blank" rel="noopener noreferrer">
+                        <img src="@/assets/facebook.svg" alt="Facebook">
+                    </a>
                 </div>
             </div>
         </div>

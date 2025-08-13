@@ -140,7 +140,7 @@ const goToPage = (page) => {
 .product-image {
   width: 100%;
   height: 425px;
-  object-fit: cover;
+  object-fit: contain;
   /* object-position: center; */
 }
 
