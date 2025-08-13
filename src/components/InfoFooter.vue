@@ -96,5 +96,7 @@ a:hover {
     padding: 5px;
     color: white;
     justify-content: center;
+    font-size: 0.8rem;
+    opacity: 0.8;
 }
 </style>

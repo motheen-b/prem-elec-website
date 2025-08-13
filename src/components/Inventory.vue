@@ -2,7 +2,9 @@
   <SectionHeader title="Explore Our Inventory" subtitle="Browse our latest liquidation pallets — updated daily." />
 
   <div class="catalog">
-    <div class="product-card" v-for="product in paginatedProducts" :key="product.id" @click="openModal(product)">
+    <ProductSkeleton v-if="loading" v-for="n in itemsPerPage" :key="'skeleton-' + n" />
+
+    <div class="product-card" v-else v-for="product in paginatedProducts" :key="product.id" @click="openModal(product)">
       <img :src="product.image_url" alt="Product Image" class="product-image" />
       <div class="product-details">
         <h2>{{ product.name }}</h2>
@@ -31,8 +33,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import ProductSkeleton from "@/components/ProductSkeleton.vue";
 import { useRouter, useRoute } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
 import SectionHeader from './SectionHeader.vue'
 import ItemModal from './ItemModal.vue'
 import axios from 'axios'
@@ -41,6 +44,7 @@ const router = useRouter()
 const route = useRoute()
 const showModal = ref(false)
 const selectedProduct = ref(null)
+const loading = ref(true)
 
 const openModal = (product) => {
   selectedProduct.value = product
@@ -72,6 +76,8 @@ onMounted(async () => {
     }
   } catch (err) {
     console.error('Error loading products:', err)
+  } finally {
+    loading.value = false;
   }
 })
 
