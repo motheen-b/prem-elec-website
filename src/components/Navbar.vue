@@ -2,28 +2,45 @@
     <div class="container">
         <div class="nav">
             <div class="nav-items">
+
+                <div class="hamburger" v-if="isMobile">
+                    <img src="../assets/burger.svg" alt="">
+                </div>
+
                 <div class="logo">
                     <img src="../assets/logo-test.png" alt="">
                 </div>
-                <div class="router-items">
+
+                <div class="router-items" v-if="!isMobile">
                     <router-link v-for="(route, index) in routes" :key="index" :to="route.path">
                         {{ route.name }}
                     </router-link>
                 </div>
+
+                <div class="router-items" v-else>
+                </div>
+
                 <div class="socials">
-                    <a href="https://www.instagram.com/premium_electronics_ca" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/premium_electronics_ca" target="_blank"
+                        rel="noopener noreferrer">
                         <img src="@/assets/instagram.svg" alt="Instagram">
                     </a>
-                    <a href="https://www.facebook.com/electronics.liquidation" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/electronics.liquidation" target="_blank"
+                        rel="noopener noreferrer">
                         <img src="@/assets/facebook.svg" alt="Facebook">
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useScreen } from '@/composables/useScreen';
+
+const { width, isMobile } = useScreen(1001);
+
 const routes = [
     { name: 'Home', path: '/' },
     { name: 'Inventory', path: '/inventory' },
@@ -62,6 +79,24 @@ const routes = [
     display: flex;
     padding: 0 25px;
     flex-basis: 100%;
+}
+
+.hamburger {
+    display: flex;
+    flex-basis: 100%;
+    position: fixed;
+    height: 90px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.hamburger:hover {
+    cursor: pointer;
+    transform: scale(1.15);
+}
+
+.hamburger img {
+    width: 50px;
+    height: auto;
 }
 
 .router-items {
@@ -113,8 +148,9 @@ a::after {
 
 .socials {
     display: flex;
+    position: relative;
     align-items: center;
-    justify-content: flex-end;
+    top: 5px;
     gap: 1rem;
 }
 
@@ -128,110 +164,26 @@ a::after {
     cursor: pointer;
     transform: scale(1.1);
 }
+
+@media screen and (max-width: 1001px) {
+    .logo {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        align-self: center;
+    }
+
+    .router-items {
+        display: flex;
+        position: relative;
+        /* display: flex;
+        position: relative;
+        color: white;
+        left: 0;
+        justify-content: flex-start;
+        border: 2px solid red; */
+    }
+
+}
+
 </style>
-
-
-
-<!-- <template>
-    <div class="nav">
-        <div class="nav-logo">
-            
-        </div>
-
-        <div class="nav-links">
-            <router-link to="/" active-class="active">Home</router-link>
-            <router-link to="/inventory" active-class="active">Inventory</router-link>
-            <router-link to="/about" active-class="active">About</router-link>
-            <router-link to="/contact" active-class="active">Contact</router-link>
-            <router-link to="/faq" active-class="active">F.A.Q.</router-link>
-        </div>
-
-        <div class="phone">
-            +1 (647) 901-7565
-        </div>
-
-        <div class="socials">
-            <img src="@/assets/instagram.svg" alt="">
-            <img src="@/assets/facebook.svg" alt="">
-        </div>
-    </div>
-</template>
-
-<script setup>
-
-</script>
-
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
-.nav {
-    display: flex;
-    height: 70px;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'Inter', 'sans-serif';
-    background-color: #032C50;
-}
-
-.nav-logo img {
-    padding: 25px;
-    width: 200px;
-    height: auto;
-}
-
-.nav-logo:hover {
-    cursor: pointer;
-}
-
-.nav-links {
-    display: flex;
-    position: absolute;
-    gap: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-a {
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-    transition: transform 0.3s ease-in-out;
-}
-
-a:hover {
-    cursor: pointer;
-    text-decoration: none;
-    transform: scale(1.15);
-}
-
-.active {
-    font-weight: 800;
-    text-decoration: underline;
-}
-
-.socials {
-    display: flex;
-    padding: 25px;
-    gap: 1rem;
-}
-
-.socials img {
-    width: 35px;
-    height: 35px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.socials img:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-.phone {
-    display: flex;
-    left: 80%;
-    color: white;
-    border: 1px solid red;
-}
-
-</style> -->
