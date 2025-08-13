@@ -20,10 +20,11 @@ defineProps({
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
 .section-header {
     text-align: center;
     margin: 2rem 0;
-    font-family: 'Inter', 'sans-serif';
+    font-family: 'Montserrat', 'sans-serif';
     
 }
 
@@ -45,7 +46,7 @@ defineProps({
     font-size: 1.8rem;
     white-space: nowrap;
     margin: 0;
-    font-weight: 600;
+    font-weight: 200;
     color: #017B92;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3S);
 }
