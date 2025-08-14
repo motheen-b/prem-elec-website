@@ -24,6 +24,7 @@ defineProps({
 
 .section-header {
     text-align: center;
+    padding: 0 2rem;
     margin: 2rem 0;
     font-family: 'Montserrat', 'sans-serif';
 

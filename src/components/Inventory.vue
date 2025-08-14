@@ -2,20 +2,24 @@
   <SectionHeader title="Explore Our Inventory" subtitle="Browse our latest liquidation pallets — updated daily." />
 
   <div class="filter">
-    <select id="category" v-model="selectedCategory">
+    <select id="dropdown" v-model="selectedCategory">
       <option value="All Categories">All Categories</option>
       <option v-for="(cat, index) in categories" :key="index" :value="cat">
         {{ cat }}
       </option>
     </select>
 
-    <select id="category" v-model="selectedCondition">
+    <select id="dropdown" v-model="selectedCondition">
       <option value="All Conditions">All Conditions</option>
       <option v-for="(con, index) in conditions" :key="index" :value="con">
         {{ con }}
       </option>
     </select>
 
+  <div class="search-container">
+    <input type="text" v-model="searchText" placeholder="Search...">
+    <button type="button">&#128269;</button>
+  </div>
   </div>
 
 
@@ -68,11 +72,12 @@
 <script setup>
 import ProductSkeleton from "@/components/ProductSkeleton.vue";
 import { useRouter, useRoute } from 'vue-router'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import SectionHeader from './SectionHeader.vue'
 import ItemModal from './ItemModal.vue'
 import axios from 'axios'
 
+const searchText = ref('');
 const router = useRouter()
 const route = useRoute()
 const showModal = ref(false)
@@ -99,22 +104,17 @@ function closeModalHandler() {
   router.replace({ query })
 }
 
-// function detectCondition(description) {
-//   const match = description.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
-//   return match ? match[0] : "Customer Returns";
-// }
-
 const detectCondition = (title) => {
   const match = title.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
   return match ? match[0] : "Customer Returns";
 };
-
 
 onMounted(async () => {
   try {
     const res = await axios.get('http://localhost:8000/catalog')
     products.value = res.data.result.products
     categories.value = res.data.result.categories
+    console.log("Categories: " + categories.value)
     if (route.query.item) {
       const product = products.value.find(p => p.id == route.query.item)
       if (product) {
@@ -129,6 +129,36 @@ onMounted(async () => {
   }
 })
 
+const sortedProducts = computed(() => {
+  return products.value
+    .filter(p => selectedCategory.value === "All Categories" || p.category === selectedCategory.value)
+    .filter(p => selectedCondition.value === "All Conditions" || detectCondition(p.name) === selectedCondition.value)
+    .filter(p => !searchText.value || p.name.toLowerCase().includes(searchText.value.toLowerCase())) // <-- search filter
+    .sort((a, b) => Number(b['in-stock'] || 0) - Number(a['in-stock'] || 0))
+});
+
+// const sortedProducts = computed(() => {
+//   return products.value
+//     .filter(p => selectedCategory.value === "All Categories" || p.category === selectedCategory.value)
+//     .filter(p => selectedCondition.value === "All Conditions" || detectCondition(p.name) === selectedCondition.value)
+//     .sort((a, b) => Number(b['in-stock'] || 0) - Number(a['in-stock'] || 0))
+// })
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return sortedProducts.value.slice(start, start + itemsPerPage)
+})
+
+const totalPages = computed(() =>
+  Math.ceil(sortedProducts.value.length / itemsPerPage)
+)
+
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
 
 // const filteredCategories = computed(() => {
 //   if (selectedCategory.value === "All Categories") return products.value
@@ -146,12 +176,6 @@ onMounted(async () => {
 //   [...filteredConditions.value].sort((a, b) => Number(b['in-stock']) - Number(a['in-stock']))
 // )
 
-const sortedProducts = computed(() => {
-  return products.value
-    .filter(p => selectedCategory.value === "All Categories" || p.category === selectedCategory.value)
-    .filter(p => selectedCondition.value === "All Conditions" || detectCondition(p.name) === selectedCondition.value)
-    .sort((a, b) => Number(b['in-stock'] || 0) - Number(a['in-stock'] || 0))
-})
 
 
 // const sortedProducts = computed(() =>
@@ -172,21 +196,6 @@ const sortedProducts = computed(() => {
 //   return [...inStockReversed, ...outOfStockReversed]
 // })
 
-const paginatedProducts = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  return sortedProducts.value.slice(start, start + itemsPerPage)
-})
-
-const totalPages = computed(() =>
-  Math.ceil(sortedProducts.value.length / itemsPerPage)
-)
-
-const goToPage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-}
 </script>
 
 <style scoped>
@@ -266,7 +275,7 @@ h2 {
 }
 
 .pagination button.active {
-  background-color: #2c3e50;
+  background-color: #032C50;
   color: white;
 }
 
@@ -275,13 +284,82 @@ h2 {
   cursor: not-allowed;
 }
 
+/* Filter */
+
 .filter {
   display: flex;
   padding: 1rem;
-  gap: 2rem;
+  gap: 1rem;
   flex-basis: 100%;
   justify-content: flex-end;
-  border: 1px solid red;
 }
+
+#dropdown {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+
+#dropdown:hover {
+  background-color: #e0e0e0;
+}
+
+#dropdown:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px #007BFF;
+}
+
+/* End of Filter */
+
+/* Search Bar */
+
+.search-container {
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  width: auto;
+}
+
+#searchbar {
+  flex: 1;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+}
+
+#searchbar:hover {
+  background-color: #e0e0e0;
+}
+
+#searchbar:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px #007BFF;
+  background-color: #f0f0f0;
+}
+
+#searchbtn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#searchbtn:hover {
+  background-color: #e0e0e0;
+}
+
+/* End of Search Bar */
 
 </style>
