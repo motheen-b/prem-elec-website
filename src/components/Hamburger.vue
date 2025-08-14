@@ -49,7 +49,7 @@ const routes = [
 .container {
     position: fixed;
     top: 90;
-    left: 0;
+    right: 0;
     z-index: 10000;
     width: 250px;
     height: 100%;
@@ -73,6 +73,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .line-title hr {
     flex-grow: 1;
     height: 1px;
@@ -90,7 +94,7 @@ a {
 
 @keyframes slideIn {
     0% {
-        transform: translateX(-100%);
+        transform: translateX(100%);
     }
 
     100% {
@@ -104,7 +108,7 @@ a {
     }
 
     100% {
-        transform: translateX(-100%);
+        transform: translateX(100%);
     }
 }
 </style>

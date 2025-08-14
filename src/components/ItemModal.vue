@@ -12,7 +12,9 @@
                 <div class="item-title">{{ title }}</div>
                 <div class="condition-container" :class="{
                     returns: detectCondition(description) === 'Customer Returns',
-                    refurbished: detectCondition(description) === 'Refurbished'
+                    refurbished: detectCondition(description) === 'Refurbished',
+                    salvage: detectCondition(description) === 'Salvage',
+                    new: detectCondition(description) === 'Brand New'
                 }">
                     {{ detectCondition(description) }}
                 </div>
@@ -37,9 +39,14 @@ function closeModal() {
 }
 
 function detectCondition(description) {
-    const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
-    return match ? match[0] : "Customer Returns";
+  const match = description.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
+  return match ? match[0] : "Customer Returns";
 }
+
+// function detectCondition(description) {
+//     const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
+//     return match ? match[0] : "Customer Returns";
+// }
 </script>
 
 <style scoped>
@@ -141,6 +148,14 @@ function detectCondition(description) {
 }
 
 .condition-container.refurbished {
+    background-color: green;
+}
+
+.condition-container.salvage {
+    background-color: rgb(209, 65, 65);
+}
+
+.condition-container.new {
     background-color: green;
 }
 

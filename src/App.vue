@@ -9,7 +9,7 @@
       <router-view />
     </main>
   </div>
-  <InfoFooter />
+  <!-- <InfoFooter /> -->
 </template>
 
 <script setup>

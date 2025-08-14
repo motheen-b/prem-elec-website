@@ -99,4 +99,63 @@ h4 {
 p {
     font-size: 20px;
 }
+
+@media screen and (max-width: 769px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h4 {
+        font-size: 1.1rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 585px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 585px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 522px) {
+    h1 {
+        font-size: 1rem;
+    }
+
+    h4 {
+        font-size: 0.8rem;
+    }
+
+    p {
+        font-size: 0.7rem;
+    }
+}
+
+
+@media screen and (max-width: 520px) {}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <SectionHeader
-            title="Premium Brands We Source From"
+            title="Featured Brands"
             subtitle="Returns & overstock from retailers you know and trust."
         />
         <div class="slide-container">

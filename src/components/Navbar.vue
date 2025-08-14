@@ -3,24 +3,22 @@
         <div class="nav">
             <div class="nav-items">
 
-                <div class="hamburger" v-if="isMobile" @click="toggleHamburger">
-                    <img src="../assets/burger.svg" alt="">
-                </div>
-
                 <div class="logo">
                     <img src="../assets/logo-test.png" alt="">
                 </div>
 
-                <div class="router-items" v-if="!isMobile">
+                <div class="hamburger" v-if="isMobile" @click="toggleHamburger">
+                    <img src="../assets/burger.svg" alt="">
+                </div>
+
+                <div class="router-items" v-else>
                     <router-link v-for="(route, index) in routes" :key="index" :to="route.path">
                         {{ route.name }}
                     </router-link>
                 </div>
 
-                <div class="router-items" v-else>
-                </div>
 
-                <div class="socials">
+                <!-- <div class="socials">
                     <a href="https://www.instagram.com/premium_electronics_ca" target="_blank"
                         rel="noopener noreferrer">
                         <img src="@/assets/instagram.svg" alt="Instagram">
@@ -29,17 +27,17 @@
                         rel="noopener noreferrer">
                         <img src="@/assets/facebook.svg" alt="Facebook">
                     </a>
-                </div>
+                </div> -->
 
             </div>
         </div>
     </div>
-    <Hamburger :show="showHamburger" @closeNav="showHamburger = false"/>
+    <Hamburger :show="showHamburger" @closeNav="showHamburger = false" />
 </template>
 
 <script setup>
 import { useScreen } from '@/composables/useScreen';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Hamburger from './Hamburger.vue';
 
 const { width, isMobile } = useScreen(1001)
@@ -49,13 +47,11 @@ const toggleHamburger = () => {
     showHamburger.value = !showHamburger.value
 }
 
-// const openHamburger = () => {
-//     showHamburger.value = true
-// }
-
-// const closeHamburger = () => {
-//     showHamburger.value = false
-// }
+watch(isMobile, (mobile) => {
+    if (!mobile) {
+        showHamburger.value = false;
+    }
+});
 
 const routes = [
     { name: 'Home', path: '/' },
@@ -85,7 +81,7 @@ const routes = [
 .nav {
     display: flex;
     justify-content: center;
-    width: 100%;
+    flex-basis: 100%;
     max-width: 1440px;
     min-width: 320px;
     font-family: 'Montserrat', 'sans-serif';
@@ -93,15 +89,19 @@ const routes = [
 
 .nav-items {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0 25px;
     flex-basis: 100%;
 }
 
 .hamburger {
     display: flex;
-    flex-basis: 100%;
-    position: fixed;
-    height: 90px;
+    position: relative;
+    left: 50;
+    transform: translateX(50);
+    align-items: center;
+    cursor: pointer;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -118,11 +118,9 @@ const routes = [
 .router-items {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     flex-basis: 100%;
-    position: fixed;
     height: 90px;
-    left: 50%;
-    transform: translateX(-50%);
     gap: 2rem;
 }
 
@@ -155,7 +153,6 @@ a::after {
     display: flex;
     align-items: center;
     color: white;
-    flex-basis: 100%;
 }
 
 .logo img {
@@ -182,24 +179,16 @@ a::after {
 }
 
 @media screen and (max-width: 1001px) {
-    .logo {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        align-self: center;
-    }
-
     .router-items {
         display: flex;
         position: relative;
-        /* display: flex;
-        position: relative;
-        color: white;
-        left: 0;
-        justify-content: flex-start;
-        border: 2px solid red; */
     }
 
 }
 
+@media screen and (max-width: 520px) {
+    /* .socials {
+        display: none;
+    } */
+}
 </style>

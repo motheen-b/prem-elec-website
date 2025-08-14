@@ -2,12 +2,12 @@
     <div class="section-header">
         <div class="line-title">
             <hr />
-                <h2>{{ title }}</h2>
+            <h2>{{ title }}</h2>
             <hr />
         </div>
-    <p class="section-subtitle">
-        {{ subtitle }}
-    </p>
+        <p class="section-subtitle">
+            {{ subtitle }}
+        </p>
     </div>
 </template>
 
@@ -21,11 +21,12 @@ defineProps({
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
 .section-header {
     text-align: center;
     margin: 2rem 0;
     font-family: 'Montserrat', 'sans-serif';
-    
+
 }
 
 .line-title {
@@ -56,6 +57,22 @@ defineProps({
     margin-top: 0.5rem;
     color: #555;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    
+
+}
+
+@media screen and (max-width: 569px) {
+    .line-title h2 {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .line-title h2 {
+        font-size: 1.2rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.8rem;
+    }
 }
 </style>

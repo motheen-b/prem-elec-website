@@ -1,7 +1,41 @@
 <template>
   <SectionHeader title="Explore Our Inventory" subtitle="Browse our latest liquidation pallets — updated daily." />
 
+  <div class="filter">
+    <select id="category" v-model="selectedCategory">
+      <option value="All Categories">All Categories</option>
+      <option v-for="(cat, index) in categories" :key="index" :value="cat">
+        {{ cat }}
+      </option>
+    </select>
+
+    <select id="category" v-model="selectedCondition">
+      <option value="All Conditions">All Conditions</option>
+      <option v-for="(con, index) in conditions" :key="index" :value="con">
+        {{ con }}
+      </option>
+    </select>
+
+  </div>
+
+
+  <!-- <select id="category2">
+      <option value="All Categories">All Categories</option>
+      <option v-for="cat in categories" :key="cat.id" :value="cat.name">
+        {{ cat.name }}
+      </option>
+    </select>
+
+    <select id="category3">
+      <option value="All Categories">All Categories</option>
+      <option v-for="cat in categories" :key="cat.id" :value="cat.name">
+        {{ cat.name }}
+      </option>
+    </select> -->
+
+
   <div class="catalog">
+
     <ProductSkeleton v-if="loading" v-for="n in itemsPerPage" :key="'skeleton-' + n" />
 
     <div class="product-card" v-else v-for="product in paginatedProducts" :key="product.id" @click="openModal(product)">
@@ -16,7 +50,6 @@
     </div>
   </div>
 
-  <!-- Pagination -->
   <div class="pagination">
     <button :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">Prev</button>
 
@@ -45,6 +78,13 @@ const route = useRoute()
 const showModal = ref(false)
 const selectedProduct = ref(null)
 const loading = ref(true)
+const products = ref([])
+const categories = ref([])
+const currentPage = ref(1)
+const itemsPerPage = 20
+const selectedCategory = ref("All Categories")
+const selectedCondition = ref("All Conditions")
+const conditions = ref(["Brand New", "Refurbished", "Customer Returns", "Salvage"])
 
 const openModal = (product) => {
   selectedProduct.value = product
@@ -59,14 +99,22 @@ function closeModalHandler() {
   router.replace({ query })
 }
 
-const products = ref([])
-const currentPage = ref(1)
-const itemsPerPage = 20
+// function detectCondition(description) {
+//   const match = description.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
+//   return match ? match[0] : "Customer Returns";
+// }
+
+const detectCondition = (title) => {
+  const match = title.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
+  return match ? match[0] : "Customer Returns";
+};
+
 
 onMounted(async () => {
   try {
     const res = await axios.get('http://localhost:8000/catalog')
-    products.value = res.data.products
+    products.value = res.data.result.products
+    categories.value = res.data.result.categories
     if (route.query.item) {
       const product = products.value.find(p => p.id == route.query.item)
       if (product) {
@@ -81,19 +129,48 @@ onMounted(async () => {
   }
 })
 
+
+// const filteredCategories = computed(() => {
+//   if (selectedCategory.value === "All Categories") return products.value
+//   return products.value.filter(p => p.category === selectedCategory.value)
+// })
+
+// const filteredConditions = computed(() => {
+//   if (selectedCondition.value == "All Conditions") return filteredCategories.value
+//   return filteredCategories.value.filter(
+//     product => detectCondition(product.title) === selectedCondition.value
+//   )
+// })
+
+// const sortedProducts = computed(() =>
+//   [...filteredConditions.value].sort((a, b) => Number(b['in-stock']) - Number(a['in-stock']))
+// )
+
 const sortedProducts = computed(() => {
-  const inStockReversed = products.value
-    .filter(p => p['in-stock'])
-    .slice()
-    .reverse()
-
-  const outOfStockReversed = products.value
-    .filter(p => !p['in-stock'])
-    .slice()
-    .reverse()
-
-  return [...inStockReversed, ...outOfStockReversed]
+  return products.value
+    .filter(p => selectedCategory.value === "All Categories" || p.category === selectedCategory.value)
+    .filter(p => selectedCondition.value === "All Conditions" || detectCondition(p.name) === selectedCondition.value)
+    .sort((a, b) => Number(b['in-stock'] || 0) - Number(a['in-stock'] || 0))
 })
+
+
+// const sortedProducts = computed(() =>
+//   [...products.value].sort((a, b) => Number(b['in-stock']) - Number(a['in-stock']))
+// )
+
+// const sortedProducts = computed(() => {
+//   const inStockReversed = products.value
+//     .filter(p => p['in-stock'])
+//     .slice()
+//     .reverse()
+
+//   const outOfStockReversed = products.value
+//     .filter(p => !p['in-stock'])
+//     .slice()
+//     .reverse()
+
+//   return [...inStockReversed, ...outOfStockReversed]
+// })
 
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
@@ -197,4 +274,14 @@ h2 {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.filter {
+  display: flex;
+  padding: 1rem;
+  gap: 2rem;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  border: 1px solid red;
+}
+
 </style>
