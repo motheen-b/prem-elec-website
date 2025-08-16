@@ -75,7 +75,7 @@ const routes = [
     justify-content: center;
     width: 100%;
     height: 90px;
-    background-color: #032C50;
+    background: linear-gradient(135deg, #032C50 0%, #1a4a7a 100%);
 }
 
 .nav {
@@ -130,6 +130,7 @@ a {
     font-size: 20px;
     text-decoration: none;
     transition: transform 0.3s ease-in-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 a::after {

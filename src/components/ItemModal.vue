@@ -1,24 +1,46 @@
 <template>
     <div class="overlay" v-if="show" @click.self="closeModal">
         <div class="modal">
-            <div class="logo">
-                <img src="@/assets/logo-2.png" alt="">
-                <div class="exit" @click.self="closeModal" style="color:red; font-size: 35px;">&times;</div>
+            <!-- Header with logo and close button -->
+            <div class="modal-header">
+                <img src="@/assets/logo-2.png" alt="Prem Elec" class="logo">
+                <button class="close-btn" @click="closeModal" aria-label="Close modal">
+                    <span>&times;</span>
+                </button>
             </div>
-            <div class="item">
-                <img :src="imageURL" alt="">
-            </div>
-            <div class="item-info-container">
-                <div class="item-title">{{ title }}</div>
-                <div class="condition-container" :class="{
-                    returns: detectCondition(description) === 'Customer Returns',
-                    refurbished: detectCondition(description) === 'Refurbished',
-                    salvage: detectCondition(description) === 'Salvage',
-                    new: detectCondition(description) === 'Brand New'
-                }">
-                    {{ detectCondition(description) }}
+
+            <!-- Product content in a more efficient layout -->
+            <div class="modal-content">
+                <!-- Left side: Product image -->
+                <div class="product-image">
+                    <img :src="imageURL" :alt="title">
                 </div>
-                <div class="item-description">{{ description }}</div>
+
+                <!-- Right side: Product details -->
+                <div class="product-details">
+                    <h2 class="product-title">{{ title }}</h2>
+                    
+                    <!-- Price prominently displayed -->
+                    <div class="price-container">
+                        <span class="price">${{ price?.toFixed(2) || '0.00' }}</span>
+                    </div>
+
+                    <!-- Condition badge -->
+                    <div class="condition-badge" :class="{
+                        returns: detectCondition(description) === 'Customer Returns',
+                        refurbished: detectCondition(description) === 'Refurbished',
+                        salvage: detectCondition(description) === 'Salvage',
+                        new: detectCondition(description) === 'Brand New'
+                    }">
+                        {{ detectCondition(description) }}
+                    </div>
+
+                    <!-- Description -->
+                    <div class="product-description">
+                        <h3>Description</h3>
+                        <p>{{ description }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -42,138 +64,206 @@ function detectCondition(description) {
   const match = description.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
   return match ? match[0] : "Customer Returns";
 }
-
-// function detectCondition(description) {
-//     const match = description.match(/\b(Customer Returns|Refurbished)\b/i);
-//     return match ? match[0] : "Customer Returns";
-// }
 </script>
 
 <style scoped>
 .overlay {
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1000;
     display: flex;
-    position: fixed;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', sans-serif;
     background: rgba(0, 0, 0, 0.6);
+    font-family: 'Inter', sans-serif;
 }
 
 .modal {
-    gap: 10px;
-    width: 90%;
-    display: flex;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-    border-radius: 15px;
-    flex-direction: column;
+    width: 95%;
+    max-width: 800px;
+    max-height: 90vh;
     background-color: rgb(218, 236, 247);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    animation: explodeIn 0.6s ease-out;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .logo {
-    display: flex;
-    padding: 10px;
-    justify-content: center;
+    height: 40px;
+    width: auto;
 }
 
-.exit {
-    display: flex;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding-right: 5px;
-    font-size: 25px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.exit:hover {
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #666;
     cursor: pointer;
-    transform: scale(1.5);
+    padding: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
-.logo img {
-    width: 200px;
-    height: auto;
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    transform: scale(1.1);
 }
 
-.item img {
-    width: 300px;
-    height: auto;
-    max-height: 400px;
+.modal-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 400px;
 }
 
-.item-info-container {
+.product-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.product-details {
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
-    padding: 10px;
-    gap: 0.5rem;
+    gap: 15px;
 }
 
-.item-title {
+.product-title {
+    font-size: 20px;
     font-weight: 600;
-    font-size: 18px;
-
+    margin: 0;
+    color: #333;
+    line-height: 1.3;
 }
 
-.item-description {
+.price-container {
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c5aa0;
+    background: rgba(44, 90, 160, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.condition-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: flex-start;
+}
+
+.condition-badge.returns {
+    background-color: #f39c12;
+}
+
+.condition-badge.refurbished {
+    background-color: #27ae60;
+}
+
+.condition-badge.salvage {
+    background-color: #e74c3c;
+}
+
+.condition-badge.new {
+    background-color: #27ae60;
+}
+
+.product-description {
+    flex: 1;
+}
+
+.product-description h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.product-description p {
     font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+    margin: 0;
     white-space: pre-line;
 }
 
-.condition-container {
-    display: inline-block;
-    align-self: flex-start;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    justify-content: center;
-    color: white;
-    width: auto;
-    height: auto;
-    padding: 0.5rem;
-    border-radius: 15px;
+/* Responsive design */
+@media (max-width: 768px) {
+    .modal {
+        width: 98%;
+        max-height: 95vh;
+    }
+    
+    .modal-content {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .product-image {
+        padding: 15px;
+    }
+    
+    .product-image img {
+        max-height: 250px;
+    }
+    
+    .product-details {
+        padding: 20px;
+    }
+    
+    .product-title {
+        font-size: 18px;
+    }
+    
+    .price {
+        font-size: 24px;
+    }
 }
 
-.condition-container.returns {
-    background-color: rgb(235, 162, 27);
-}
-
-.condition-container.refurbished {
-    background-color: green;
-}
-
-.condition-container.salvage {
-    background-color: rgb(209, 65, 65);
-}
-
-.condition-container.new {
-    background-color: green;
-}
-
-@keyframes explodeIn {
+@keyframes slideIn {
     0% {
-        transform: scale(0);
+        transform: scale(0.8);
         opacity: 0;
     }
-
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-
-    70% {
-        transform: scale(0.95);
-    }
-
     100% {
         transform: scale(1);
         opacity: 1;
