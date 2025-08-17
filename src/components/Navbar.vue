@@ -47,11 +47,11 @@ const toggleHamburger = () => {
     showHamburger.value = !showHamburger.value
 }
 
-watch(isMobile, (mobile) => {
-    if (!mobile) {
-        showHamburger.value = false;
-    }
-});
+// watch(isMobile, (mobile) => {
+//     if (!mobile) {
+//         showHamburger.value = false;
+//     }
+// });
 
 const routes = [
     { name: 'Home', path: '/' },
