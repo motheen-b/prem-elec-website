@@ -7,7 +7,12 @@ export function useScreen(breakpoint = 768) {
     width.value = window.innerWidth
   }
 
-  const isMobile = computed(() => width.value < breakpoint)
+  // const isMobile = computed(() => width.value < breakpoint)
+  const isMobile = computed(() => {
+    const uaMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    const touchDevice = navigator.maxTouchPoints > 1
+    return width.value < breakpoint || uaMobile || touchDevice
+  })
 
   onMounted(() => {
     window.addEventListener('resize', updateSize)

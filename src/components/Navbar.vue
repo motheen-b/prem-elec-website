@@ -3,9 +3,9 @@
         <div class="nav">
             <div class="nav-items">
 
-                <div class="logo">
-                    <img src="../assets/logo-test.png" alt="">
-                </div>
+                <router-link to="/" class="logo">
+                    <img src="../assets/logo-test.png" alt="Premium Electronics">
+                </router-link>
 
                 <div class="hamburger" v-if="isMobile" @click="toggleHamburger">
                     <img src="../assets/burger.svg" alt="">
@@ -47,11 +47,11 @@ const toggleHamburger = () => {
     showHamburger.value = !showHamburger.value
 }
 
-// watch(isMobile, (mobile) => {
-//     if (!mobile) {
-//         showHamburger.value = false;
-//     }
-// });
+watch(isMobile, (mobile) => {
+    if (!mobile) {
+        showHamburger.value = false;
+    }
+});
 
 const routes = [
     { name: 'Home', path: '/' },

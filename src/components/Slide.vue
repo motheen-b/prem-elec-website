@@ -1,9 +1,5 @@
 <template>
     <div>
-        <SectionHeader
-            title="Featured Brands"
-            subtitle="Returns & overstock from retailers you know and trust."
-        />
         <div class="slide-container">
             <div class="logos">
                 <div class="logos-slide">
@@ -35,42 +31,47 @@ import SectionHeader from './SectionHeader.vue';
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-    .slide-container {
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        flex-basis: 100%;
-        height: 125px;
-        margin-bottom: 25px;
+
+.slide-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex-basis: 100%;
+    height: 90px;
+}
+
+.logos {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex-basis: 100%;
+    padding: 10px 0;
+    white-space: nowrap;
+}
+
+.logos-slide {
+    display: flex;
+    align-items: center;
+    animation: slide 20s infinite linear;
+}
+
+.logos-slide img {
+    margin: 0 30px;
+    border-radius: 15px;
+    width: 75px;
+}
+
+#logo {
+    display: block;
+}
+
+@keyframes slide {
+    from {
+        transform: translateX(0);
     }
 
-    .logos {
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        flex-basis: 100%;
-        padding: 10px 0;
-        white-space: nowrap;
+    to {
+        transform: translateX(-100%);
     }
-    .logos-slide {
-        display: flex;
-        align-items: center;
-        animation: slide 20s infinite linear;
-    }
-    .logos-slide img {
-        margin: 0 30px;
-        border-radius: 15px;
-        width: 120px;
-    }
-    #logo {
-        display: block;
-    }
-    @keyframes slide {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-100%);
-        }
-    }
+}
 </style>

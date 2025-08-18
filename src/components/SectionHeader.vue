@@ -40,9 +40,10 @@ defineProps({
 .line-title hr {
     flex-grow: 1;
     height: 1px;
-    background-color: #032C50;
     border: none;
+    background: linear-gradient(to right, transparent, #032C50, transparent);
 }
+
 
 .line-title h2 {
     font-size: 1.8rem;

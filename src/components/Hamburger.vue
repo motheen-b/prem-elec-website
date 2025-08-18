@@ -34,7 +34,7 @@ const routes = [
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .overlay {
     position: fixed;
@@ -44,6 +44,7 @@ const routes = [
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
 }
 
 .container {
@@ -53,9 +54,11 @@ const routes = [
     z-index: 10000;
     width: 250px;
     height: 100%;
-    background-color: #032C50;
-    transform: translateX(-100%);
+    background: linear-gradient(135deg, #032C50 0%, #1a4a7a 100%);
+    transform: translateX(100%);
     animation: slideIn 0.6s forwards;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .links {
@@ -64,24 +67,29 @@ const routes = [
     text-align: center;
     flex-direction: column;
     line-height: 4;
-    font-family: 'Montserrat', 'sans-serif';
+    font-family: 'Inter', sans-serif;
 }
 
 a {
     color: white;
     font-size: 20px;
+    font-weight: 500;
     text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
 a:hover {
     cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-4px);
 }
 
-.line-title hr {
-    flex-grow: 1;
+hr {
     height: 1px;
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
     border: none;
+    margin: 0.5rem 0;
 }
 
 .slide-enter-active {

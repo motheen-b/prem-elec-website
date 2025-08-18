@@ -41,12 +41,37 @@
                         <router-link to="/">Home</router-link>
                         <router-link to="/about">About</router-link>
                         <router-link to="/inventory">Inventory</router-link>
-                        <router-link to="/contact-us">Contact</router-link>
+                        <router-link to="/contact">Contact</router-link>
                     </nav>
                 </div>
             </div>
             
-            <div class="footer-divider"></div>
+            <div class="newsletter-section">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <h3>Stay Updated</h3>
+                        <p>Subscribe to our newsletter for the latest deals and updates</p>
+                    </div>
+                    <form class="newsletter-form" @submit.prevent="subscribeNewsletter">
+                        <div class="input-group">
+                            <input 
+                                v-model="email" 
+                                type="email" 
+                                placeholder="Enter your email"
+                                required
+                                class="newsletter-input"
+                            >
+                            <button type="submit" class="newsletter-button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- <div class="footer-divider"></div> -->
             
             <div class="footer-bottom">
                 <p>© 2025 Premium Electronics. All rights reserved.</p>
@@ -56,7 +81,40 @@
 </template>
 
 <script setup>
-// No additional script needed for this simple footer
+import { ref } from 'vue'
+import { useToast } from '@/composables/useToast'
+
+const { success, error } = useToast()
+const email = ref('')
+
+const subscribeNewsletter = () => {
+    if (!email.value) {
+        error('Please enter a valid email address', 'Subscription Error')
+        return
+    }
+    
+    // Simulate newsletter subscription
+    try {
+        console.log('📧 Newsletter subscription:', email.value)
+        
+        // Here you would typically send the email to your backend
+        // For now, we'll simulate a successful subscription
+        
+        success(
+            'Thank you for subscribing! You\'ll receive our latest updates soon.', 
+            'Successfully Subscribed'
+        )
+        
+        // Reset form
+        email.value = ''
+        
+    } catch (err) {
+        error(
+            'Failed to subscribe. Please try again later.', 
+            'Subscription Error'
+        )
+    }
+}
 </script>
 
 <style scoped>
@@ -166,6 +224,7 @@
 }
 
 .footer-bottom {
+    padding-top: 0.8rem;
     text-align: center;
 }
 
@@ -174,6 +233,92 @@
     font-size: 0.75rem;
     color: #999999;
     line-height: 1.2;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.newsletter-text h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.newsletter-text p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+.newsletter-form {
+    flex-shrink: 0;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.newsletter-input {
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 0.875rem;
+    width: 280px;
+    outline: none;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-input:focus {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.newsletter-button {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newsletter-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+.newsletter-button svg {
+    transition: transform 0.3s ease;
+}
+
+.newsletter-button:hover svg {
+    transform: translateX(2px);
 }
 
 @media (max-width: 900px) {
@@ -215,6 +360,29 @@
     .social-link svg {
         width: 17px;
         height: 17px;
+    }
+    
+    /* Newsletter responsive */
+    .newsletter-content {
+        gap: 1.5rem;
+    }
+    
+    .newsletter-text h3 {
+        font-size: 1rem;
+    }
+    
+    .newsletter-text p {
+        font-size: 0.8rem;
+    }
+    
+    .newsletter-input {
+        width: 240px;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8rem;
+    }
+    
+    .newsletter-button {
+        padding: 0.625rem;
     }
 }
 
@@ -275,6 +443,37 @@
     .footer-divider {
         margin: 0.625rem 0;
     }
+    
+    /* Newsletter mobile */
+    .newsletter-section {
+        padding: 1rem 0;
+    }
+    
+    .newsletter-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.875rem;
+    }
+    
+    .newsletter-text h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.375rem;
+    }
+    
+    .newsletter-text p {
+        font-size: 0.75rem;
+    }
+    
+    .newsletter-input {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .newsletter-button {
+        padding: 0.75rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -333,6 +532,34 @@
     .footer-bottom p {
         font-size: 0.7rem;
     }
+    
+    /* Newsletter small mobile */
+    .newsletter-section {
+        padding: 0.875rem 0;
+    }
+    
+    .newsletter-content {
+        gap: 0.75rem;
+    }
+    
+    .newsletter-text h3 {
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .newsletter-text p {
+        font-size: 0.7rem;
+    }
+    
+    .newsletter-input {
+        max-width: 260px;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.75rem;
+    }
+    
+    .newsletter-button {
+        padding: 0.625rem;
+    }
 }
 
 @media (max-width: 320px) {
@@ -390,6 +617,34 @@
     
     .footer-bottom p {
         font-size: 0.65rem;
+    }
+    
+    /* Newsletter extra small mobile */
+    .newsletter-section {
+        padding: 0.75rem 0;
+    }
+    
+    .newsletter-content {
+        gap: 0.625rem;
+    }
+    
+    .newsletter-text h3 {
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .newsletter-text p {
+        font-size: 0.65rem;
+    }
+    
+    .newsletter-input {
+        max-width: 240px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.7rem;
+    }
+    
+    .newsletter-button {
+        padding: 0.5rem;
     }
 }
 </style>
