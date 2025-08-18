@@ -65,7 +65,7 @@
     <ProductSkeleton v-if="loading" v-for="n in itemsPerPage" :key="'skeleton-' + n" />
 
     <div class="product-card" v-else v-for="product in paginatedProducts" :key="product.id" @click="openModal(product)">
-      <img :src="product.image_url" alt="Product Image" class="product-image" />
+      <img :src="product.image_url" :alt="product.name + ' - liquidation product'" class="product-image" />
       <div class="product-details">
         <h2>{{ product.name }}</h2>
         <p class="price">{{ product.price.toLocaleString() }}</p>

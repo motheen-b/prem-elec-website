@@ -2,8 +2,8 @@
     <div class="hero-container">
         <div class="hero-content">
             <div class="hero-text">
-                <h4>Welcome to Premium Electronics,</h4>
-                <h1>Discounted Electronics & Wholesale Pallets</h1>
+                <h4>Welcome to The Liquidation Group,</h4>
+                <h1>Wholesale Liquidation Pallets & Bulk Electronics</h1>
                 
                 <div class="contact-details">
                     <button class="contact-button" @click="openMap('724 Caledonia Rd, North York, ON, M6B 3X7')">

@@ -1,9 +1,20 @@
 <template>
   <div>
-    <Slide />
-    <Hero />
-    <ShippingBanner />
-    <Inventory />
+    <!-- Main hero section -->
+    <section aria-label="Hero">
+      <Slide />
+      <Hero />
+    </section>
+    
+    <!-- Shipping information -->
+    <section aria-label="Shipping Information">
+      <ShippingBanner />
+    </section>
+    
+    <!-- Featured inventory -->
+    <section aria-label="Featured Inventory">
+      <Inventory />
+    </section>
   </div>
 </template>
 

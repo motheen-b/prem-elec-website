@@ -3,22 +3,22 @@
         <div class="slide-container">
             <div class="logos">
                 <div class="logos-slide">
-                    <img src="@/assets/best-buy.png" id="logo">
-                    <img src="@/assets/amazon.png" alt="logo">
-                    <img src="@/assets/walmart.png" alt="logo">
-                    <img src="@/assets/costco.png" alt="logo">
-                    <img src="@/assets/wayfair.png" alt="logo">
-                    <img src="@/assets/target.png" alt="logo">
-                    <img src="@/assets/homedepot.png" alt="logo">
+                    <img src="@/assets/best-buy.png" alt="Best Buy liquidation pallets" id="logo">
+                    <img src="@/assets/amazon.png" alt="Amazon liquidation pallets">
+                    <img src="@/assets/walmart.png" alt="Walmart liquidation pallets">
+                    <img src="@/assets/costco.png" alt="Costco liquidation pallets">
+                    <img src="@/assets/wayfair.png" alt="Wayfair liquidation pallets">
+                    <img src="@/assets/target.png" alt="Target liquidation pallets">
+                    <img src="@/assets/homedepot.png" alt="Home Depot liquidation pallets">
                 </div>
                 <div class="logos-slide">
-                    <img src="@/assets/best-buy.png" id="logo">
-                    <img src="@/assets/amazon.png" alt="logo">
-                    <img src="@/assets/walmart.png" alt="logo">
-                    <img src="@/assets/costco.png" alt="logo">
-                    <img src="@/assets/wayfair.png" alt="logo">
-                    <img src="@/assets/target.png" alt="logo">
-                    <img src="@/assets/homedepot.png" alt="logo">
+                    <img src="@/assets/best-buy.png" alt="Best Buy liquidation pallets" id="logo">
+                    <img src="@/assets/amazon.png" alt="Amazon liquidation pallets">
+                    <img src="@/assets/walmart.png" alt="Walmart liquidation pallets">
+                    <img src="@/assets/costco.png" alt="Costco liquidation pallets">
+                    <img src="@/assets/wayfair.png" alt="Wayfair liquidation pallets">
+                    <img src="@/assets/target.png" alt="Target liquidation pallets">
+                    <img src="@/assets/homedepot.png" alt="Home Depot liquidation pallets">
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 <template>
     <div class="header-container">
         <div class="socials">
-            <img src="@/assets/instagram.svg" alt="">
-            <img src="@/assets/facebook.svg" alt="">
+            <img src="@/assets/instagram.svg" alt="Follow us on Instagram">
+            <img src="@/assets/facebook.svg" alt="Follow us on Facebook">
         </div>
         <!-- <span class="header-text">724 Caledonia Rd, North York</span> -->
         <div class="contact">

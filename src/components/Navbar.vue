@@ -4,11 +4,11 @@
             <div class="nav-items">
 
                 <router-link to="/" class="logo">
-                    <img src="../assets/logo-test.png" alt="Premium Electronics">
+                    The Liquidation Group
                 </router-link>
 
                 <div class="hamburger" v-if="isMobile" @click="toggleHamburger">
-                    <img src="../assets/burger.svg" alt="">
+                    <img src="../assets/burger.svg" alt="Mobile menu toggle">
                 </div>
 
                 <div class="router-items" v-else>
@@ -156,8 +156,16 @@ a::after {
     color: white;
 }
 
-.logo img {
-    height: 50px;
+.logo svg {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo:hover svg {
+    transform: scale(1.02);
+    filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
 }
 
 .socials {
