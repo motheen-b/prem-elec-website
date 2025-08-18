@@ -19,7 +19,7 @@
 
 
                 <!-- <div class="socials">
-                    <a href="https://www.instagram.com/premium_electronics_ca" target="_blank"
+                    <a href="https://www.instagram.com/theliquidation.group" target="_blank"
                         rel="noopener noreferrer">
                         <img src="@/assets/instagram.svg" alt="Instagram">
                     </a>
