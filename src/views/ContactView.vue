@@ -32,7 +32,7 @@
                              </div>
                              <div class="contact-text">
                                  <h4>Call Us</h4>
-                                 <p>(647) 901-7565 - Motheen</p>
+                                 <p>(647) 901-7565</p>
                              </div>
                          </div>
  
@@ -58,7 +58,7 @@
                              </div>
                              <div class="contact-text">
                                  <h4>Business Hours</h4>
-                                 <p>Open by appointment only - Contact us prior to arrival</p>
+                                 <p>Available by appointment from 9 AM to 6 PM.</p>
                              </div>
                          </div>
                      </div>
@@ -220,7 +220,7 @@ function sendEmail() {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    align-items: stretch;
+    align-items: start;
 }
 
 .contact-bottom {
@@ -403,9 +403,6 @@ function sendEmail() {
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     margin-top: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
 }
 
 .form-container h2 {
@@ -428,7 +425,6 @@ function sendEmail() {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    flex: 1;
 }
 
 .form-group {
