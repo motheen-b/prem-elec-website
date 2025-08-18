@@ -95,54 +95,7 @@
                      </div>
                  </div>
  
-                 <div class="form-container">
-                     <h2>Send Us a Message</h2>
-                     <p class="form-description">
-                         Have questions about our inventory or need assistance? Fill out the form below and we'll get back to you promptly.
-                     </p>
-                     
-                     <form @submit.prevent="sendEmail" class="contact-form">
-                         <div class="form-group">
-                             <label for="name">Full Name *</label>
-                             <input 
-                                 v-model="form.name" 
-                                 type="text" 
-                                 id="name" 
-                                 required 
-                                 placeholder="Enter your full name"
-                             />
-                         </div>
- 
-                         <div class="form-group">
-                             <label for="email">Email Address *</label>
-                             <input 
-                                 v-model="form.email" 
-                                 type="email" 
-                                 id="email" 
-                                 required 
-                                 placeholder="Enter your email address"
-                             />
-                         </div>
- 
-                         <div class="form-group">
-                             <label for="message">Message *</label>
-                             <textarea 
-                                 v-model="form.message" 
-                                 id="message" 
-                                 rows="6" 
-                                 required 
-                                 placeholder="Tell us about your inquiry or what you're looking for..."
-                             ></textarea>
-                         </div>
- 
-                         <button type="submit" class="submit-btn">
-                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                 <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                             </svg>
-                             Send Message
-                         </button>
-                     </form>
-                 </div>
+
              </div>
  
              <!-- Bottom Section: Map -->
@@ -160,43 +113,7 @@
 
 <script setup>
 import SectionHeader from "@/components/SectionHeader.vue";
-import { reactive } from "vue";
 import { openMap, clickToCall } from '@/composables/clickAction';
-import { useToast } from '@/composables/useToast';
-
-const { success, error } = useToast();
-
-const form = reactive({
-    name: "",
-    email: "",
-    message: "",
-});
-
-function sendEmail() {
-    console.log("📨 Sending email...", form);
-    
-    // Simulate form submission
-    try {
-        // Here you would typically send the data to your backend
-        // For now, we'll simulate a successful submission
-        
-        success(
-            "We'll get back to you within 24 hours!", 
-            "Message Sent Successfully"
-        );
-        
-        // Reset form
-        form.name = "";
-        form.email = "";
-        form.message = "";
-        
-    } catch (err) {
-        error(
-            "Failed to send message. Please try again or contact us directly.", 
-            "Submission Error"
-        );
-    }
-}
 </script>
 
 <style scoped>
@@ -217,10 +134,11 @@ function sendEmail() {
 }
 
 .contact-top {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
+    display: flex;
+    margin: 0 1rem;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
 }
 
 .contact-bottom {
@@ -235,6 +153,8 @@ function sendEmail() {
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 800px;
 }
 
 .contact-info h2 {
@@ -391,110 +311,7 @@ function sendEmail() {
     height: 400px;
 }
 
-.contact-right {
-    display: flex;
-    flex-direction: column;
-}
 
-.form-container {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    margin-top: 0;
-}
-
-.form-container h2 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0 0 0.75rem 0;
-    color: #1f2937;
-    padding-top: 0;
-}
-
-.form-description {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0 0 2rem 0;
-    color: #6b7280;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.form-group label {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-}
-
-.form-group input,
-.form-group textarea {
-    padding: 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
-    background: white;
-    transition: all 0.3s ease;
-    resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #9ca3af;
-}
-
-.submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
-    margin-top: 0.5rem;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
-}
-
-.submit-btn svg {
-    transition: transform 0.3s ease;
-}
-
-.submit-btn:hover svg {
-    transform: translateX(2px);
-}
 
 @media (max-width: 1024px) {
     .contact-top {
@@ -516,9 +333,9 @@ function sendEmail() {
         gap: 1.5rem;
     }
 
-    .contact-info,
-    .form-container {
+    .contact-info {
         padding: 1.5rem;
+        margin: 0 1rem;
     }
 
     .action-buttons {
@@ -550,13 +367,11 @@ function sendEmail() {
         font-size: 13px;
     }
 
-    .contact-info h2,
-    .form-container h2 {
+    .contact-info h2 {
         font-size: 1.5rem;
     }
 
-    .contact-description,
-    .form-description {
+    .contact-description {
         font-size: 14px;
     }
 
@@ -579,31 +394,20 @@ function sendEmail() {
 }
 
 @media (max-width: 480px) {
-    .contact-info,
-    .form-container {
+    .contact-info {
         padding: 1rem;
+        margin: 0 0.75rem;
     }
 
-    .contact-info h2,
-    .form-container h2 {
+    .contact-info h2 {
         font-size: 1.25rem;
     }
 
-    .contact-description,
-    .form-description {
+    .contact-description {
         font-size: 13px;
     }
 
-    .form-group input,
-    .form-group textarea {
-        padding: 0.875rem;
-        font-size: 14px;
-    }
 
-    .submit-btn {
-        padding: 0.875rem 1.5rem;
-        font-size: 14px;
-    }
 
     .action-btn {
         width: 100%;
