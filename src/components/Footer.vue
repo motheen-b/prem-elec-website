@@ -4,7 +4,7 @@
             <div class="footer-content">
                 <div class="footer-row-1">
                     <div class="brand">
-                        <img src="../assets/logo-test.png" alt="Premium Electronics">
+                        <img src="../assets/logo-test.png" alt="The Liquidation Group">
                     </div>
                     
                     <div class="social-media">
@@ -74,7 +74,7 @@
             <!-- <div class="footer-divider"></div> -->
             
             <div class="footer-bottom">
-                <p>© 2025 Premium Electronics. All rights reserved.</p>
+                <p>© 2025 The Liquidation Group. All rights reserved.</p>
             </div>
         </div>
     </footer>

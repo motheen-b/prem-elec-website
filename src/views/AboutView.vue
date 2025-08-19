@@ -6,7 +6,7 @@
       <div class="content-left">
         <div class="text-content">
           <p>
-            At Premium Electronics, we specialize in bringing you high-quality electronics at exceptional value. Whether
+            At The Liquidation Group, we specialize in bringing you high-quality electronics at exceptional value. Whether
             you're looking for individual tech products or entire pallets of liquidation items, our carefully curated
             inventory has something for every shopper, from tech enthusiasts to resale businesses.
           </p>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="why-choose-us">
-          <h2>Why Choose Premium Electronics?</h2>
+          <h2>Why Choose The Liquidation Group?</h2>
           <div class="benefits-grid">
                          <div class="benefit-card">
                <div class="benefit-icon">

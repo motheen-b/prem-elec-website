@@ -8,7 +8,7 @@
                  <div class="contact-info">
                      <h2>Get In Touch</h2>
                      <p class="contact-description">
-                         Ready to find your perfect electronics deal? Contact us today for personalized service and expert guidance.
+                         Ready to buy liquidation pallets or single electronics? Contact us for wholesale pricing and inventory details.
                      </p>
  
                      <div class="contact-details">
@@ -45,7 +45,7 @@
                              </div>
                              <div class="contact-text">
                                  <h4>Email Us</h4>
-                                 <p>contact@premiumelectronics.ca</p>
+                                 <p>contact@theliquidation.group</p>
                              </div>
                          </div>
  

@@ -1,203 +1,68 @@
 # The Liquidation Group - E-commerce Platform
 
-A full-stack web application for managing and displaying wholesale liquidation inventory. Built with Vue.js 3 frontend and FastAPI backend, integrated with Square's e-commerce platform.
+A modern, responsive e-commerce website for The Liquidation Group, specializing in wholesale liquidation electronics. This platform showcases our inventory of Amazon liquidation products, customer returns, refurbished items, and bulk electronics from major retailers.
 
-## 🚀 Features
+## 🎯 About The Project
 
-- **Real-time Inventory Management**: Display and manage liquidation products from Square API
-- **Advanced Filtering**: Filter by category, condition, and search functionality
-- **Responsive Design**: Mobile-friendly interface with modern UI/UX
-- **Product Modals**: Detailed product information with images and descriptions
-- **Pagination**: Efficient browsing of large product catalogs
-- **SSL Security**: HTTPS enabled with Let's Encrypt certificates
+The Liquidation Group is a wholesale liquidation business based in North York, Ontario, serving customers across Canada and the United States. We source high-quality electronics from Amazon's liquidation channels and other major retailers including Best Buy, Home Depot, Walmart, Target, and Costco.
 
-## 🛠️ Tech Stack
+### What We Offer
 
-### Frontend
-- **Vue.js 3** - Progressive JavaScript framework
-- **Vue Router** - Client-side routing
-- **Pinia** - State management
-- **Axios** - HTTP client for API calls
-- **CSS3** - Modern styling with Grid/Flexbox
+- **Amazon Liquidation Products**: LPN, HCE, FC, Med, and bulk electronics
+- **Customer Returns**: Gently used items inspected and tested for quality
+- **Refurbished Electronics**: Professionally restored and certified products
+- **New Products**: Brand new electronics in original packaging
+- **Salvage Pallets**: Bulk lots perfect for parts or repair projects
 
-### Backend
-- **FastAPI** - Modern Python web framework
-- **Square API** - E-commerce platform integration
-- **Python-dotenv** - Environment variable management
+### Why This Platform Was Created
 
-### DevOps
-- **Docker** - Containerization
-- **Docker Compose** - Multi-container orchestration
-- **Nginx** - Reverse proxy and web server
-- **Let's Encrypt** - SSL certificate management
+This e-commerce website was developed to:
 
-## 📋 Prerequisites
+1. **Showcase Our Inventory**: Display our diverse selection of liquidation products with detailed information, images, and pricing
+2. **Improve Customer Experience**: Provide an intuitive, mobile-friendly interface for browsing our inventory
+3. **Streamline Operations**: Automate inventory management and reduce manual processes
+4. **Expand Reach**: Enable customers across Canada and the US to discover our liquidation deals
+5. **Build Trust**: Present a professional, modern platform that reflects our commitment to quality and service
 
-- Node.js 20+
-- Python 3.11+
-- Docker and Docker Compose
-- Square API credentials
+## 🚀 Key Features
 
-## 🚀 Quick Start
+- **Real-time Inventory Display**: Live product catalog with current availability
+- **Advanced Filtering**: Search by category, condition, and product type
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Product Details**: Comprehensive product information with images and descriptions
+- **Contact Integration**: Direct phone and email contact options
+- **Professional Presentation**: Modern UI/UX that builds customer confidence
 
-### Local Development
+## 🏢 Our Business Model
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd prem-elec-website
-   ```
+We specialize in:
+- **Bulk Liquidation**: Entire pallets of electronics at wholesale prices
+- **Individual Items**: Single electronics for personal use or small-scale reselling
+- **Local Pickup & Delivery**: Convenient service from our North York warehouse
+- **Wholesale Pricing**: Competitive rates for resellers and businesses
 
-2. **Install frontend dependencies**
-   ```bash
-   npm install
-   ```
+## 📍 Location & Contact
 
-3. **Set up backend environment**
-   ```bash
-   cd backend
-   cp .env.example .env
-   # Edit .env with your Square API credentials
-   ```
+- **Address**: 724 Caledonia Rd, North York, Ontario M6B 3X7, Canada
+- **Phone**: (647) 901-7565
+- **Email**: contact@theliquidation.group
+- **Hours**: Available by appointment from 9 AM to 6 PM
 
-4. **Start frontend development server**
-   ```bash
-   npm run dev
-   ```
+## 🛠️ Technical Overview
 
-5. **Start backend server**
-   ```bash
-   cd backend
-   python main.py
-   ```
+Built with modern web technologies:
+- **Frontend**: Vue.js 3 with responsive design
+- **Backend**: FastAPI for inventory management
+- **Integration**: Square API for e-commerce functionality
+- **Deployment**: Docker containers with SSL security
 
-### Docker Deployment
+## 🎯 Target Audience
 
-1. **Build and push Docker images**
-   ```bash
-   # Build frontend
-   docker build -t yourusername/prem-elec-frontend:latest .
-   docker push yourusername/prem-elec-frontend:latest
-   
-   # Build backend
-   cd backend
-   docker build -t yourusername/prem-elec-backend:latest .
-   docker push yourusername/prem-elec-backend:latest
-   ```
-
-2. **Deploy to VPS**
-   ```bash
-   # Create docker-compose.yml on VPS
-   version: '3.8'
-   services:
-     frontend:
-       image: yourusername/prem-elec-frontend:latest
-       ports:
-         - "3000:80"
-       restart: unless-stopped
-     backend:
-       image: yourusername/prem-elec-backend:latest
-       ports:
-         - "8000:8000"
-       env_file:
-         - .env
-       restart: unless-stopped
-   ```
-
-3. **Configure Nginx and SSL**
-   ```bash
-   # Install Certbot
-   sudo apt install certbot python3-certbot-nginx
-   
-   # Get SSL certificates
-   sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -d api.yourdomain.com
-   ```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the backend directory:
-
-```env
-SQUARE_APPLICATION_ID="your_square_app_id"
-SQUARE_ACCESS_TOKEN="your_square_access_token"
-API_HOST=0.0.0.0
-API_PORT=8000
-ALLOWED_ORIGINS=http://localhost:5173,http://localhost,https://yourdomain.com
-```
-
-### Square API Setup
-
-1. Create a Square Developer account
-2. Create a new application
-3. Get your Application ID and Access Token
-4. Add them to your `.env` file
-
-## 📁 Project Structure
-
-```
-prem-elec-website/
-├── src/
-│   ├── components/          # Vue components
-│   ├── views/              # Page components
-│   ├── stores/             # Pinia stores
-│   ├── composables/        # Reusable composables
-│   └── assets/             # Static assets
-├── backend/
-│   ├── main.py             # FastAPI application
-│   ├── requirements.txt    # Python dependencies
-│   └── .env               # Environment variables
-├── Dockerfile              # Frontend Docker configuration
-├── nginx.conf             # Nginx configuration
-├── docker-compose.yml     # Docker orchestration
-└── package.json           # Node.js dependencies
-```
-
-## 🌐 API Endpoints
-
-- `GET /catalog` - Retrieve all products and categories
-- `GET /` - Health check endpoint
-- `GET /health` - Application health status
-
-## 🔒 Security
-
-- HTTPS/SSL enabled with Let's Encrypt
-- CORS properly configured for production domains
-- Environment variables for sensitive data
-- Input validation and sanitization
-
-## 📱 Responsive Design
-
-The application is fully responsive and optimized for:
-- Desktop (1024px+)
-- Tablet (768px - 1023px)
-- Mobile (320px - 767px)
-
-## 🚀 Deployment
-
-The application is deployed using:
-- **Docker containers** for consistent environments
-- **Nginx reverse proxy** for load balancing and SSL termination
-- **Let's Encrypt** for free SSL certificates
-- **VPS hosting** for production deployment
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Support
-
-For support or questions, please contact the development team.
+- **Resellers**: Looking for bulk liquidation opportunities
+- **Tech Enthusiasts**: Seeking quality electronics at discounted prices
+- **Small Businesses**: Needing affordable tech solutions
+- **Repair Shops**: Sourcing parts and salvage items
 
 ---
 
-**Built with ❤️ using Vue.js 3 and FastAPI**
+**The Liquidation Group** - Your trusted source for quality liquidation electronics across Canada and the United States.

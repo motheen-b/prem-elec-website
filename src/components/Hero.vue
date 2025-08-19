@@ -58,10 +58,11 @@ import { clickToCall, openMap } from '@/composables/clickAction';
     display: flex;
     padding: 2rem;
     height: 500px;
-    background-image: url('@/assets/hero.png');
+    /* background-image: url('@/assets/hero.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background-color: #000;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);

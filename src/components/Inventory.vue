@@ -87,7 +87,7 @@
   </div>
 
   <ItemModal :show="showModal" @close="closeModalHandler" :imageURL="selectedProduct?.image_url"
-    :title="selectedProduct?.name" :price="selectedProduct?.price" :description="selectedProduct?.description" />
+    :title="selectedProduct?.name" :price="selectedProduct?.price" :description="selectedProduct?.description" :inStock="selectedProduct?.['in-stock']" />
 
 </template>
 

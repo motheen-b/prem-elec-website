@@ -43,8 +43,9 @@
                     </div>
 
                     <!-- Contact note -->
-                    <div class="contact-note">
-                        <span>Contact to purchase</span>
+                    <div class="contact-note" :class="{ 'in-stock': inStock, 'sold-out': !inStock }">
+                        <span v-if="inStock">Contact to purchase</span>
+                        <span v-else>Out of stock</span>
                     </div>
                 </div>
             </div>
@@ -60,6 +61,7 @@ defineProps({
     title: String,
     description: String,
     price: Number,
+    inStock: Boolean
 })
 
 function closeModal() {
@@ -242,18 +244,41 @@ function detectCondition(description) {
 
 .contact-note {
     padding: 0.75rem 1rem;
-    background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
-    border: 1px solid #dc2626;
     border-radius: 8px;
     text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.contact-note.in-stock :hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+}
+
+.contact-note.in-stock {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1px solid #16a34a;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+}
+
+.contact-note.sold-out {
+    background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+    border: 1px solid #dc2626;
     box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
 }
 
 .contact-note span {
-    font-size: 0.875rem;
-    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.contact-note.in-stock span {
+    color: #16a34a;
+}
+
+.contact-note.sold-out span {
     color: #dc2626;
-    text-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);
 }
 
 /* Mobile Responsive */

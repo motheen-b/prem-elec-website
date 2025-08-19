@@ -3,7 +3,7 @@
     <div class="banner-content">
       <div class="banner-text">
         <h1>Need Delivery?</h1>
-        <p>Contact us for a fast & reliable delivery service!</p>
+        <p>Contact for a fast & reliable delivery service!</p>
       </div>
       <button class="phone-button" @click="clickToCall('4167862973')">
         <svg class="phone-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -25,8 +25,7 @@ import { clickToCall } from '@/composables/clickAction';
 .banner-container {
   background: linear-gradient(135deg, #032C50 0%, #1a4a7a 100%);
   border-radius: 16px;
-  margin: 4rem auto;
-  max-width: 1200px;
+  margin: 4rem 1rem;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -132,7 +131,7 @@ import { clickToCall } from '@/composables/clickAction';
 /* Mobile devices */
 @media (max-width: 768px) {
   .banner-container {
-    margin: 3rem auto;
+    margin: 3rem 1rem;
     border-radius: 12px;
   }
 
@@ -164,7 +163,7 @@ import { clickToCall } from '@/composables/clickAction';
 /* Small mobile devices */
 @media (max-width: 480px) {
   .banner-container {
-    margin: 2rem auto;
+    margin: 2rem 1rem;
     border-radius: 10px;
   }
 
@@ -197,7 +196,7 @@ import { clickToCall } from '@/composables/clickAction';
 /* Extra small mobile devices */
 @media (max-width: 360px) {
   .banner-container {
-    margin: 1.5rem auto;
+    margin: 1.5rem 1rem;
   }
   
   .banner-content {
@@ -229,7 +228,7 @@ import { clickToCall } from '@/composables/clickAction';
 /* 320px specific breakpoint */
 @media (max-width: 320px) {
   .banner-container {
-    margin: 1.25rem auto;
+    margin: 1.25rem 0.5rem;
     border-radius: 8px;
   }
 
@@ -257,6 +256,40 @@ import { clickToCall } from '@/composables/clickAction';
   .phone-icon {
     width: 14px;
     height: 14px;
+  }
+}
+
+/* Extra small mobile devices - ensures banner never touches sides */
+@media (max-width: 280px) {
+  .banner-container {
+    margin: 1rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .banner-content {
+    padding: 0.75rem;
+    gap: 0.625rem;
+  }
+
+  .banner-text h1 {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .banner-text p {
+    font-size: 0.7rem;
+  }
+
+  .phone-button {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.7rem;
+    gap: 0.25rem;
+    border-radius: 6px;
+  }
+
+  .phone-icon {
+    width: 12px;
+    height: 12px;
   }
 }
 
