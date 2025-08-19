@@ -2,7 +2,7 @@
     <div class="hero-container">
         <div class="hero-content">
             <div class="hero-text">
-                <h4>Welcome to The Liquidation Group,</h4>
+                <!-- <h4>Welcome to The Liquidation Group,</h4> -->
                 <h1>Wholesale Liquidation Pallets & Bulk Electronics</h1>
                 
                 <div class="contact-details">
@@ -102,7 +102,7 @@ import { clickToCall, openMap } from '@/composables/clickAction';
 .hero-text {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
     color: white;
 }
 
@@ -125,7 +125,7 @@ import { clickToCall, openMap } from '@/composables/clickAction';
 .contact-details {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
 }
 
 .contact-button {
