@@ -1,18 +1,18 @@
-version: '3.8'
-
 services:
-  # Vue.js Frontend
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  backend:
+    build: ./backend
+    container_name: backend_service
+    environment:
+      - SQUARE_APPLICATION_ID=${SQUARE_APPLICATION_ID}
+      - SQUARE_ACCESS_TOKEN=${SQUARE_ACCESS_TOKEN}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     ports:
-      - "3000:80"
-    networks:
-      - app-network
-    restart: unless-stopped
-    # Note: Remove depends_on since backend runs separately
+      - "8000:8000"
 
-networks:
-  app-network:
-    driver: bridge
+  frontend:
+    build: ./
+    container_name: frontend_service
+    ports:
+      - "3000:80"   # Map host 3000 → container's Nginx 80
+    depends_on:
+      - backend

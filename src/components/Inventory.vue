@@ -135,7 +135,7 @@ const detectCondition = (title) => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get('https://api.theliquidation.group/catalog')
+    const res = await axios.get('https://api.theliquidation.group/catalog') // https://api.theliquidation.group/catalog')
     products.value = res.data.result.products
     categories.value = res.data.result.categories
     console.log("Categories: " + categories.value)
