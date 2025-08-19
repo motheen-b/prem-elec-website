@@ -2,7 +2,7 @@
   <div>
     <!-- Main hero section -->
     <section aria-label="Hero">
-      <Slide />
+      <!-- <Slide /> -->
       <Hero />
     </section>
     

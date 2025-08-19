@@ -115,6 +115,10 @@ const selectedCondition = ref("All Conditions")
 const conditions = ref(["Brand New", "Refurbished", "Customer Returns", "Salvage"])
 const { error } = useToast()
 
+const prodURL = ref("https://api.theliquidation.group/catalog")
+const localURL = ref("http://12.0.0.1:8000/catalog")
+const isProd = ref(true)
+
 const openModal = (product) => {
   selectedProduct.value = product
   showModal.value = true
@@ -135,7 +139,7 @@ const detectCondition = (title) => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get('https://api.theliquidation.group/catalog') // https://api.theliquidation.group/catalog')
+    const res = await axios.get(isProd.value ? prodURL.value : localURL.value) // https://api.theliquidation.group/catalog')
     products.value = res.data.result.products
     categories.value = res.data.result.categories
     console.log("Categories: " + categories.value)
