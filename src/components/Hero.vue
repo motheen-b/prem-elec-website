@@ -62,7 +62,8 @@ import { clickToCall, openMap } from '@/composables/clickAction';
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* border-radius: 15px; */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     position: relative;
 }
@@ -75,6 +76,8 @@ import { clickToCall, openMap } from '@/composables/clickAction';
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.4);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     /* border-radius: 15px; */
     z-index: 1;
 }
@@ -90,7 +93,8 @@ import { clickToCall, openMap } from '@/composables/clickAction';
     flex-direction: column;
     justify-content: center;
     font-family: 'Inter', sans-serif;
-    border-radius: 15px;
+    /* border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px; */
     max-width: 600px;
 }
 
