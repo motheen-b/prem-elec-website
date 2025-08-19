@@ -1,6 +1,6 @@
-# The Liquidation Group - E-commerce Platform
+# The Liquidation Group - Inventory Showcase Platform
 
-A modern, responsive e-commerce website for The Liquidation Group, specializing in wholesale liquidation electronics. This platform showcases our inventory of Amazon liquidation products, customer returns, refurbished items, and bulk electronics from major retailers.
+A modern, responsive inventory showcase website for The Liquidation Group, specializing in wholesale liquidation electronics. This platform displays our inventory of Amazon liquidation products, customer returns, refurbished items, and bulk electronics from major retailers. All purchases are made through direct contact and in-person transactions via cash, e-transfer, or wire transfer to protect against chargeback fraud and ensure secure, legitimate transactions.
 
 ## 🎯 About The Project
 
@@ -16,21 +16,22 @@ The Liquidation Group is a wholesale liquidation business based in North York, O
 
 ### Why This Platform Was Created
 
-This e-commerce website was developed to:
+This inventory showcase website was developed to:
 
 1. **Showcase Our Inventory**: Display our diverse selection of liquidation products with detailed information, images, and pricing
 2. **Improve Customer Experience**: Provide an intuitive, mobile-friendly interface for browsing our inventory
 3. **Streamline Operations**: Automate inventory management and reduce manual processes
 4. **Expand Reach**: Enable customers across Canada and the US to discover our liquidation deals
 5. **Build Trust**: Present a professional, modern platform that reflects our commitment to quality and service
+6. **Facilitate Contact**: Make it easy for customers to reach out for purchases and inquiries
 
 ## 🚀 Key Features
 
-- **Real-time Inventory Display**: Live product catalog with current availability
+- **Inventory Showcase**: Display our liquidation products with detailed information and images
 - **Advanced Filtering**: Search by category, condition, and product type
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Product Details**: Comprehensive product information with images and descriptions
-- **Contact Integration**: Direct phone and email contact options
+- **Contact Integration**: Direct phone and email contact options for purchases
 - **Professional Presentation**: Modern UI/UX that builds customer confidence
 
 ## 🏢 Our Business Model
@@ -40,6 +41,8 @@ We specialize in:
 - **Individual Items**: Single electronics for personal use or small-scale reselling
 - **Local Pickup & Delivery**: Convenient service from our North York warehouse
 - **Wholesale Pricing**: Competitive rates for resellers and businesses
+- **Personal Service**: All purchases require direct contact and are completed in-person via cash, e-transfer, or wire transfer
+- **Fraud Protection**: We avoid online credit card payments to protect against chargeback scams and ensure legitimate transactions
 
 ## 📍 Location & Contact
 
@@ -52,8 +55,8 @@ We specialize in:
 
 Built with modern web technologies:
 - **Frontend**: Vue.js 3 with responsive design
-- **Backend**: FastAPI for inventory management
-- **Integration**: Square API for e-commerce functionality
+- **Backend**: FastAPI for securely connecting to Square API
+- **Integration**: Square API for inventory management and catalog retrieval
 - **Deployment**: Docker containers with SSL security
 
 ## 🎯 Target Audience
