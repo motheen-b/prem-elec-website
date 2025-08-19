@@ -139,7 +139,7 @@ const detectCondition = (title) => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get(isProd.value ? prodURL.value : localURL.value) // https://api.theliquidation.group/catalog')
+    const res = await axios.get(isProd.value ? prodURL.value : localURL.value)
     products.value = res.data.result.products
     categories.value = res.data.result.categories
     console.log("Categories: " + categories.value)
@@ -165,6 +165,10 @@ const sortedProducts = computed(() => {
     .filter(p => !searchText.value || p.name.toLowerCase().includes(searchText.value.toLowerCase())) // <-- search filter
     .sort((a, b) => Number(b['in-stock'] || 0) - Number(a['in-stock'] || 0))
 });
+
+watch([selectedCategory, selectedCondition, searchText], () => {
+  currentPage.value = 1
+})
 
 // const sortedProducts = computed(() => {
 //   return products.value
