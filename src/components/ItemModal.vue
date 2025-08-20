@@ -2,6 +2,7 @@
     <div class="overlay" v-if="show" @click.self="closeModal">
         <div class="modal">
             <div class="modal-header">
+                <h3 class="modal-title">{{ title }}</h3>
                 <button class="close-btn" @click="closeModal" aria-label="Close modal">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -31,56 +32,55 @@
                 </div>
 
                 <div class="product-details">
-                    <div class="product-header">
-                        <h2 class="product-title">{{ title }}</h2>
-                        <div class="price-badge">
-                            <span class="price">${{ price?.toLocaleString() || '0' }}</span>
+                    <div class="lot-info">
+                        <!-- <div class="lot-header">
+                            <h3>Lot Information:</h3>
+                        </div> -->
+                        
+                        <div class="lot-price">
+                            <span class="price">${{ price ? price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00' }}</span>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <div class="condition-badge" :class="{
+                                returns: detectCondition(description) === 'Customer Returns',
+                                refurbished: detectCondition(description) === 'Refurbished',
+                                salvage: detectCondition(description) === 'Salvage',
+                                new: detectCondition(description) === 'Brand New'
+                            }">
+                                {{ detectCondition(description) }}
+                            </div>
+                        </div>
+                        
+                        <div class="lot-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Total Units</span>
+                                <span class="detail-value">{{ extractUnitsAndPricePerUnit(title, price).totalUnits }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Price per Unit</span>
+                                <span class="detail-value">{{ extractUnitsAndPricePerUnit(title, price).pricePerUnit === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).pricePerUnit.toFixed(2).replace(/\.?0+$/, '') }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">MSRP</span>
+                                <span class="detail-value">{{ extractUnitsAndPricePerUnit(title, price).msrp === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).msrp.toLocaleString() }}</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="condition-badge" :class="{
-                        returns: detectCondition(description) === 'Customer Returns',
-                        refurbished: detectCondition(description) === 'Refurbished',
-                        salvage: detectCondition(description) === 'Salvage',
-                        new: detectCondition(description) === 'Brand New'
-                    }">
-                        {{ detectCondition(description) }}
-                    </div>
-
-                    <div class="units-info">
-                        <p style="color:#3b82f6; font-weight:bold; margin-top: 0; margin-bottom: 0.5rem;">Lot Information:</p>
-                        <span>
-                            Total Units: <strong>{{ extractUnitsAndPricePerUnit(title, price).totalUnits }}</strong> | 
-                            Price per Unit: <strong>{{ extractUnitsAndPricePerUnit(title, price).pricePerUnit === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).pricePerUnit.toFixed(2).replace(/\.?0+$/, '') }}</strong> | 
-                            MSRP: <strong>{{ extractUnitsAndPricePerUnit(title, price).msrp === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).msrp.toLocaleString() }}</strong>
-                        </span>
-                    </div>
-
-                    <div class="contact-menu" v-if="inStock">
-                        <div class="contact-header">
-                            <span>Contact for Purchase</span>
-                        </div>
-                        <div class="contact-options">
-                            <a href="#" @click.prevent="clickToCall('+16479017565')" class="contact-option phone">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                                <span>Call (647) 901-7565</span>
-                            </a>
-                            <a href="mailto:contact@theliquidation.group" class="contact-option email">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                                <span>Email</span>
-                            </a>
-                            <a href="https://wa.me/16479017565" target="_blank" class="contact-option whatsapp">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                                </svg>
-                                <span>WhatsApp</span>
-                            </a>
-                        </div>
+                                        <div class="contact-menu" v-if="inStock">
+                        <a href="#" @click.prevent="clickToCall('+16479017565')" class="contact-option phone">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <span>Call</span>
+                        </a>
+                        <a href="https://wa.me/16479017565" target="_blank" class="contact-option whatsapp">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                            </svg>
+                            <span>WhatsApp</span>
+                        </a>
                     </div>
                     <div class="contact-note sold-out" v-else>
                         <span>Out of stock</span>
@@ -106,7 +106,7 @@
                 </svg>
             </button>
             <img :src="imageURL" :alt="title" class="fullscreen-image">
-            <div class="fullscreen-title">{{ title }}</div>
+            <!-- <div class="fullscreen-title">{{ title }}</div> -->
         </div>
     </div>
 </template>
@@ -203,8 +203,8 @@ function extractUnitsAndPricePerUnit(title, price) {
 
 .modal {
     width: 100%;
-    max-width: 900px;
-    max-height: 90vh;
+    max-width: 750px;
+    max-height: 85vh;
     background: white;
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(3, 44, 80, 0.3);
@@ -217,10 +217,24 @@ function extractUnitsAndPricePerUnit(title, price) {
 
 .modal-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
     background: linear-gradient(135deg, #032C50 0%, #1a4a7a 100%);
     border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.modal-title {
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+    padding-right: 1rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .close-btn {
@@ -257,8 +271,8 @@ function extractUnitsAndPricePerUnit(title, price) {
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 2rem;
-    min-height: 400px;
+    padding: 1.5rem;
+    min-height: 300px;
     position: relative;
 }
 
@@ -307,8 +321,8 @@ function extractUnitsAndPricePerUnit(title, price) {
 }
 
 .product-details {
-    flex: 0 0 320px;
-    padding: 2rem;
+    flex: 0 0 280px;
+    padding: 1.5rem;
     background: white;
     display: flex;
     flex-direction: column;
@@ -318,8 +332,9 @@ function extractUnitsAndPricePerUnit(title, price) {
 
 .product-header {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .product-title {
@@ -336,7 +351,7 @@ function extractUnitsAndPricePerUnit(title, price) {
 }
 
 .price {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #3b82f6;
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
@@ -349,31 +364,39 @@ function extractUnitsAndPricePerUnit(title, price) {
 .condition-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding: 0.375rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8125rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.025em;
     color: white;
-    align-self: flex-start;
-    margin-bottom: 0;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    min-width: 100px;
+    width: fit-content;
+    text-align: center;
 }
 
 .condition-badge.returns {
-    background: #f59e0b;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .condition-badge.refurbished {
-    background: #10b981;
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .condition-badge.salvage {
-    background: #ef4444;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .condition-badge.new {
-    background: #10b981;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .product-description {
@@ -428,122 +451,145 @@ function extractUnitsAndPricePerUnit(title, price) {
 }
 
 .contact-menu {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    border: 1px solid #94a3b8;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.contact-header {
-    text-align: center;
-    margin-bottom: 0.75rem;
-}
-
-.contact-header span {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e293b;
-}
-
-.contact-options {
     display: flex;
-    flex-direction: column;
     gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .contact-option {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
+    font-size: 0.6875rem;
+    transition: all 0.15s ease;
     border: 1px solid transparent;
+    width: 80px;
+    justify-content: center;
 }
 
 .contact-option:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .contact-option.phone {
-    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-    border-color: #166534;
-    color: #16a34a;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: #3b82f6;
+    color: #1d4ed8;
 }
 
 .contact-option.phone:hover {
-    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-    border-color: #15803d;
-    color: #15803d;
-}
-
-.contact-option.email {
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    border-color: #1e40af;
-    color: #3b82f6;
-}
-
-.contact-option.email:hover {
     background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
     border-color: #2563eb;
-    color: #2563eb;
+    color: #1e40af;
 }
 
 .contact-option.whatsapp {
     background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-    border-color: #15803d;
-    color: #25d366;
+    border-color: #25d366;
+    color: #15803d;
 }
 
 .contact-option.whatsapp:hover {
     background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     border-color: #16a34a;
-    color: #16a34a;
+    color: #166534;
 }
 
 .contact-option svg {
     flex-shrink: 0;
 }
 
-.units-info {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    border: 1px solid #0ea5e9;
+.lot-info {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     padding: 1rem;
-    margin-top: 0;
-    margin-bottom: 0;
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
-    min-height: 80px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.lot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.lot-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.lot-price {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.lot-price .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #059669;
+    background: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.lot-details {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 0.5rem;
 }
 
-.units-info p {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.875rem;
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f9fafb;
 }
 
-.units-info span {
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: #0c4a6e;
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.detail-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #111827;
 }
 
 .note-section {
     background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
     border: 1px solid #dc2626;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.75rem;
     margin-top: 0;
     margin-bottom: 0;
     box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
-    min-height: 80px;
+    min-height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -800,16 +846,15 @@ function extractUnitsAndPricePerUnit(title, price) {
     }
 
     .contact-menu {
-        padding: 0.75rem;
-    }
-
-    .contact-header span {
-        font-size: 0.875rem;
+        padding: 0.375rem;
+        gap: 0.375rem;
     }
 
     .contact-option {
-        padding: 0.625rem 0.875rem;
-        font-size: 0.8125rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.625rem;
+        width: 70px;
+        gap: 0.25rem;
     }
 
     .fullscreen-content {
