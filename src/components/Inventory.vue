@@ -116,7 +116,7 @@ const conditions = ref(["Brand New", "Refurbished", "Customer Returns", "Salvage
 const { error } = useToast()
 
 const prodURL = ref("https://api.theliquidation.group/catalog")
-const localURL = ref("http://12.0.0.1:8000/catalog")
+const localURL = ref("http://127.0.0.1:8000/catalog")
 const isProd = ref(true)
 
 const openModal = (product) => {
@@ -141,6 +141,7 @@ onMounted(async () => {
   try {
     const res = await axios.get(isProd.value ? prodURL.value : localURL.value)
     products.value = res.data.result.products
+    console.log("Products: " + products.value)
     categories.value = res.data.result.categories
     console.log("Categories: " + categories.value)
     if (route.query.item) {

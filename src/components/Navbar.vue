@@ -154,6 +154,15 @@ a::after {
     display: flex;
     align-items: center;
     color: white;
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.02);
 }
 
 .logo svg {
@@ -192,12 +201,31 @@ a::after {
         display: flex;
         position: relative;
     }
+    
+    .logo {
+        font-size: 20px;
+    }
+}
 
+@media screen and (max-width: 768px) {
+    .logo {
+        font-size: 18px;
+    }
 }
 
 @media screen and (max-width: 520px) {
+    .logo {
+        font-size: 16px;
+    }
+    
     /* .socials {
         display: none;
     } */
+}
+
+@media screen and (max-width: 400px) {
+    .logo {
+        font-size: 14px;
+    }
 }
 </style>

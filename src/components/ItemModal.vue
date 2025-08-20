@@ -1,7 +1,6 @@
 <template>
     <div class="overlay" v-if="show" @click.self="closeModal">
         <div class="modal">
-            <!-- Compact header -->
             <div class="modal-header">
                 <button class="close-btn" @click="closeModal" aria-label="Close modal">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -11,14 +10,26 @@
                 </button>
             </div>
 
-            <!-- Product content -->
             <div class="modal-content">
-                <!-- Product image - maximized -->
                 <div class="product-image-container">
-                    <img :src="imageURL" :alt="title" class="product-image">
+                    <img 
+                        :src="imageURL" 
+                        :alt="title" 
+                        class="product-image"
+                        @click="enlargeImage"
+                        :class="{ 'clickable': true }"
+                    >
+                    <div class="enlarge-overlay" @click="enlargeImage">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                            <line x1="11" y1="8" x2="11" y2="14"></line>
+                            <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                        <span>Click to enlarge</span>
+                    </div>
                 </div>
 
-                <!-- Product details - compact -->
                 <div class="product-details">
                     <div class="product-header">
                         <h2 class="product-title">{{ title }}</h2>
@@ -27,7 +38,6 @@
                         </div>
                     </div>
 
-                    <!-- Condition badge -->
                     <div class="condition-badge" :class="{
                         returns: detectCondition(description) === 'Customer Returns',
                         refurbished: detectCondition(description) === 'Refurbished',
@@ -37,23 +47,74 @@
                         {{ detectCondition(description) }}
                     </div>
 
-                    <!-- Description -->
-                    <div class="product-description">
-                        <p>{{ description }}</p>
+                    <div class="units-info">
+                        <p style="color:#3b82f6; font-weight:bold; margin-top: 0; margin-bottom: 0.5rem;">Lot Information:</p>
+                        <span>
+                            Total Units: <strong>{{ extractUnitsAndPricePerUnit(title, price).totalUnits }}</strong> | 
+                            Price per Unit: <strong>{{ extractUnitsAndPricePerUnit(title, price).pricePerUnit === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).pricePerUnit.toFixed(2).replace(/\.?0+$/, '') }}</strong> | 
+                            MSRP: <strong>{{ extractUnitsAndPricePerUnit(title, price).msrp === '?' ? '?' : '$' + extractUnitsAndPricePerUnit(title, price).msrp.toLocaleString() }}</strong>
+                        </span>
                     </div>
 
-                    <!-- Contact note -->
-                    <div class="contact-note" :class="{ 'in-stock': inStock, 'sold-out': !inStock }">
-                        <span v-if="inStock">Contact to purchase</span>
-                        <span v-else>Out of stock</span>
+                    <div class="contact-menu" v-if="inStock">
+                        <div class="contact-header">
+                            <span>Contact for Purchase</span>
+                        </div>
+                        <div class="contact-options">
+                            <a href="#" @click.prevent="clickToCall('+16479017565')" class="contact-option phone">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                                <span>Call (647) 901-7565</span>
+                            </a>
+                            <a href="mailto:contact@theliquidation.group" class="contact-option email">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                <span>Email</span>
+                            </a>
+                            <a href="https://wa.me/16479017565" target="_blank" class="contact-option whatsapp">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                                <span>WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-note sold-out" v-else>
+                        <span>Out of stock</span>
+                    </div>
+
+                    <div class="note-section">
+                        <p>Note:</p>
+                        <span>
+                            This item is in {{ detectCondition(description) }} condition and is final sale. No returns or exchanges.
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="fullscreen-overlay" v-if="showFullscreen" @click="closeFullscreen">
+        <div class="fullscreen-content" @click.stop>
+            <button class="fullscreen-close-btn" @click="closeFullscreen" aria-label="Close fullscreen">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <img :src="imageURL" :alt="title" class="fullscreen-image">
+            <div class="fullscreen-title">{{ title }}</div>
+        </div>
+    </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { clickToCall } from '@/composables/clickAction.js';
+
 const emit = defineEmits(['close'])
 defineProps({
     show: Boolean,
@@ -64,13 +125,60 @@ defineProps({
     inStock: Boolean
 })
 
+const showFullscreen = ref(false);
+
 function closeModal() {
     emit('close')
+}
+
+function enlargeImage() {
+    showFullscreen.value = true;
+}
+
+function closeFullscreen() {
+    showFullscreen.value = false;
 }
 
 function detectCondition(description) {
     const match = description.match(/\b(Customer Returns|Refurbished|Brand New|Salvage)\b/i);
     return match ? match[0] : "Customer Returns";
+}
+
+function extractUnitsAndPricePerUnit(title, price) {
+    // Extract number of units from title
+    const unitsMatch = title.match(/(\d+)\s*Units?/i);
+    const units = unitsMatch ? parseInt(unitsMatch[1]) : null;
+    
+    // Extract MSRP from title
+    const msrpMatch = title.match(/MSRP\s*\$?([\d,]+)/i);
+    const msrp = msrpMatch ? parseInt(msrpMatch[1].replace(/,/g, '')) : null;
+    
+    // If no valid units found, return placeholder object
+    if (!units || units <= 0) {
+        return {
+            totalUnits: "?",
+            pricePerUnit: "?",
+            msrp: msrp || "?"
+        };
+    }
+    
+    // If no valid price, return placeholder object
+    if (!price || price <= 0) {
+        return {
+            totalUnits: units,
+            pricePerUnit: "?",
+            msrp: msrp || "?"
+        };
+    }
+    
+    // Calculate price per unit
+    const pricePerUnit = price / units;
+    
+    return {
+        totalUnits: units,
+        pricePerUnit: pricePerUnit,
+        msrp: msrp || "?"
+    };
 }
 </script>
 
@@ -151,6 +259,7 @@ function detectCondition(description) {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     padding: 2rem;
     min-height: 400px;
+    position: relative;
 }
 
 .product-image {
@@ -159,6 +268,42 @@ function detectCondition(description) {
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.enlarge-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 10;
+    text-align: center;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.enlarge-overlay svg {
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+.enlarge-overlay span {
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .product-details {
@@ -167,14 +312,14 @@ function detectCondition(description) {
     background: white;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow-y: auto;
 }
 
 .product-header {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .product-title {
@@ -212,6 +357,7 @@ function detectCondition(description) {
     letter-spacing: 0.025em;
     color: white;
     align-self: flex-start;
+    margin-bottom: 0;
 }
 
 .condition-badge.returns {
@@ -281,6 +427,228 @@ function detectCondition(description) {
     color: #dc2626;
 }
 
+.contact-menu {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #94a3b8;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.contact-header span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.contact-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.contact-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.contact-option:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contact-option.phone {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #166534;
+    color: #16a34a;
+}
+
+.contact-option.phone:hover {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    border-color: #15803d;
+    color: #15803d;
+}
+
+.contact-option.email {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: #1e40af;
+    color: #3b82f6;
+}
+
+.contact-option.email:hover {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.contact-option.whatsapp {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #15803d;
+    color: #25d366;
+}
+
+.contact-option.whatsapp:hover {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    border-color: #16a34a;
+    color: #16a34a;
+}
+
+.contact-option svg {
+    flex-shrink: 0;
+}
+
+.units-info {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.units-info p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+}
+
+.units-info span {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #0c4a6e;
+}
+
+.note-section {
+    background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+    border: 1px solid #dc2626;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.note-section p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.note-section span {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #000000;
+}
+
+/* Fullscreen overlay styles */
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(8px);
+    font-family: 'Inter', sans-serif;
+}
+
+.fullscreen-content {
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.fullscreen-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    backdrop-filter: blur(10px);
+    z-index: 11;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fullscreen-close-btn:hover {
+    background: rgba(220, 38, 38, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.fullscreen-close-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+}
+
+.fullscreen-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.fullscreen-title {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .overlay {
@@ -306,6 +674,24 @@ function detectCondition(description) {
         max-height: 280px;
     }
 
+    .enlarge-overlay {
+        width: 50px;
+        height: 50px;
+        font-size: 0.5rem;
+        padding: 4px;
+    }
+
+    .enlarge-overlay svg {
+        width: 16px;
+        height: 16px;
+        margin-bottom: 1px;
+    }
+
+    .enlarge-overlay span {
+        font-size: 0.5rem;
+        line-height: 1;
+    }
+
     .product-details {
         flex: 1;
         padding: 1.5rem;
@@ -323,6 +709,22 @@ function detectCondition(description) {
 
     .product-description p {
         font-size: 0.8125rem;
+    }
+
+    /* Fullscreen responsive */
+    .fullscreen-content {
+        width: 95%;
+        max-height: 95vh;
+        border-radius: 12px;
+    }
+
+    .fullscreen-image {
+        max-height: 85vh;
+    }
+
+    .fullscreen-title {
+        font-size: 1rem;
+        padding: 0.375rem 0.75rem;
     }
 }
 
@@ -354,6 +756,18 @@ function detectCondition(description) {
         max-height: 230px;
     }
 
+    .enlarge-overlay {
+        width: 50px;
+        height: 50px;
+        font-size: 0.5rem;
+    }
+
+    .enlarge-overlay svg {
+        width: 16px;
+        height: 16px;
+        margin-bottom: 1px;
+    }
+
     .product-details {
         padding: 1rem;
         gap: 0.75rem;
@@ -383,6 +797,48 @@ function detectCondition(description) {
 
     .contact-note span {
         font-size: 0.8125rem;
+    }
+
+    .contact-menu {
+        padding: 0.75rem;
+    }
+
+    .contact-header span {
+        font-size: 0.875rem;
+    }
+
+    .contact-option {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8125rem;
+    }
+
+    .fullscreen-content {
+        width: 98%;
+        max-height: 98vh;
+        border-radius: 8px;
+    }
+
+    .fullscreen-close-btn {
+        width: 40px;
+        height: 40px;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .fullscreen-close-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 2;
+    }
+
+    .fullscreen-image {
+        max-height: 90vh;
+    }
+
+    .fullscreen-title {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+        bottom: 0.5rem;
     }
 }
 

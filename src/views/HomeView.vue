@@ -6,8 +6,8 @@
       <Hero />
     </section>
     
-    <!-- Shipping information -->
-    <section aria-label="Shipping Information">
+    <!-- Banners section (Delivery & WhatsApp) -->
+    <section aria-label="Banners">
       <ShippingBanner />
     </section>
     

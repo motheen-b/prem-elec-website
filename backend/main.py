@@ -42,26 +42,29 @@ async def get_products():
 
     response = {
         'products': [],
-        'categories': []
+        'categories': ['Pallets', 'Electronics', 'Furniture', 'Appliances']
     }
 
-    categories = {}
+    categories = {
+        'M4SO6XG4F4SU3MJASFTTIQY4': 'Pallets',
+        '7RZ5KU26Z2BTFLDTPSDWWZ7B': 'Electronics',
+        'WCN4HVAR5KDQ4XID42XSSOTF': 'Furniture',
+        'X4Z5PFZOWEGKUWHJPXI4O3WR': 'Appliances'
+    }
     image_urls = {}
     try:
-        result = client.catalog.list(types='ITEM,CATEGORY,IMAGE')
+        result = client.catalog.list(types='ITEM,IMAGE')
         items = result.items
 
         for item in items[::-1]:
 
             item_type = item.type
 
-            if item_type == 'CATEGORY':
-                print('Category:', item.category_data.name)
-                categories[item.id] = item.category_data.name
-                response['categories'].append(item.category_data.name)
-                print('C:', response["categories"])
+            # if item_type == 'CATEGORY':
+            #     categories[item.id] = item.category_data.name
+            #     response['categories'].append(item.category_data.name)
             
-            elif item_type == 'IMAGE':
+            if item_type == 'IMAGE':
                 image_urls[item.id] = item.image_data.url
 
             elif item_type == 'ITEM':
@@ -81,7 +84,9 @@ async def get_products():
                 in_stock = False if stock else True
 
                 image_id = data.image_ids[0]
+
                 image_url = image_urls[image_id]
+  
 
                 category_id = data.categories[0].id
 
@@ -96,7 +101,6 @@ async def get_products():
                     "category": categories[category_id] # ??
                 })
 
-        print(response["categories"])
 
         return {"result": response}
 
