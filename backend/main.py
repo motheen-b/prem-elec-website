@@ -1,4 +1,5 @@
 import uvicorn
+import aiohttp
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -18,8 +19,12 @@ app.add_middleware(
         "http://localhost",     
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000",
+
         "https://theliquidation.group",
         "https://www.theliquidation.group",
+        "https://api.theliquidation.group",
+        "https://www.api.theliquidation.group",
+
         "http://theliquidation.group",
         "http://www.theliquidation.group",
         "http://159.89.123.156",
@@ -37,22 +42,45 @@ client = Square(
 )
 
 
+async def get_images():
+    image_urls = {}
+    API_URL = f'https://connect.squareup.com/v2/catalog/list?types=image'
+    HEADERS = {
+        'Square-Version': '2025-07-16',
+        'Authorization': f'Bearer {os.getenv("SQUARE_ACCESS_TOKEN")}',
+        'Content-Type': 'application/json'
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get(API_URL, headers=HEADERS) as response:
+            assert response.status == 200
+            data = await response.json()
+            objects = data['objects']
+            for object in objects:
+                image_urls[object['id']] = object['image_data']['url']
+
+    return image_urls
+
+
 @app.get("/catalog")
 async def get_products():
 
-    response = {
-        'products': [],
-        'categories': ['Pallets', 'Electronics', 'Furniture', 'Appliances']
-    }
-
-    categories = {
+    CATEGORIES = {
         'M4SO6XG4F4SU3MJASFTTIQY4': 'Pallets',
         '7RZ5KU26Z2BTFLDTPSDWWZ7B': 'Electronics',
         'WCN4HVAR5KDQ4XID42XSSOTF': 'Furniture',
         'X4Z5PFZOWEGKUWHJPXI4O3WR': 'Appliances'
     }
-    image_urls = {}
+
+    response = {
+        'products': [],
+        'categories': list(CATEGORIES.values())
+    }
+
+
     try:
+        image_urls = await get_images()
+        print(image_urls)
+
         result = client.catalog.list(types='ITEM,IMAGE')
         items = result.items
 
@@ -64,10 +92,12 @@ async def get_products():
             #     categories[item.id] = item.category_data.name
             #     response['categories'].append(item.category_data.name)
             
-            if item_type == 'IMAGE':
-                image_urls[item.id] = item.image_data.url
+            # if item_type == 'IMAGE':
+            #     image_urls[item.id] = item.image_data.url
 
-            elif item_type == 'ITEM':
+            
+
+            if item_type == 'ITEM':
                 data = item.item_data
 
                 name = data.name
@@ -75,6 +105,7 @@ async def get_products():
                 image_url = data.ecom_image_uris[0] if data.ecom_image_uris else None
 
                 var = data.variations[0] if data.variations else  []
+
                 var_data = var.item_variation_data
                 price_cents = var_data.price_money.amount if var_data.price_money else 0
                 price = price_cents / 100
@@ -85,7 +116,11 @@ async def get_products():
 
                 image_id = data.image_ids[0]
 
-                image_url = image_urls[image_id]
+                try:
+                    image_url = image_urls[image_id]
+                    print(image_url)
+                except KeyError:
+                    image_url = None
   
 
                 category_id = data.categories[0].id
@@ -98,7 +133,7 @@ async def get_products():
                     "currency": currency,
                     "image_url": image_url,
                     "in-stock": in_stock,
-                    "category": categories[category_id] # ??
+                    "category": CATEGORIES[category_id]
                 })
 
 
