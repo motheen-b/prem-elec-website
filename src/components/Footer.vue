@@ -24,18 +24,18 @@
                 
                 <div class="footer-row-2">
                     <div class="contact-info">
-                        <p>
+                        <button class="contact-item" @click="clickToCall('6479017565')" title="Click to call">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 0.5rem;">
                                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                             </svg>
                             (647) 901 7565
-                        </p>
-                        <p>
+                        </button>
+                        <button class="contact-item" @click="handleEmailClick" title="Click to copy email or open email app">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 0.5rem;">
                                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                             </svg>
                             contact@theliquidation.group
-                        </p>
+                        </button>
                     </div>
                     
                     <nav class="footer-nav">
@@ -84,9 +84,39 @@
 <script setup>
 import { ref } from 'vue'
 import { useToast } from '@/composables/useToast'
+import { clickToCall } from '@/composables/clickAction'
 
 const { success, error } = useToast()
 const email = ref('')
+
+const handleEmailClick = async () => {
+    const emailAddress = 'contact@theliquidation.group'
+    
+    // Check if device is mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    
+    try {
+        // Always try to copy to clipboard first
+        await navigator.clipboard.writeText(emailAddress)
+        success('Email copied to clipboard!', 'Email Copied')
+        
+        // Only open email app on mobile devices
+        if (isMobile) {
+            setTimeout(() => {
+                window.open(`mailto:${emailAddress}`, '_blank')
+            }, 500)
+        }
+        
+    } catch (err) {
+        // Fallback: only open email app on mobile
+        if (isMobile) {
+            window.open(`mailto:${emailAddress}`, '_blank')
+            success('Email app opened!', 'Email App')
+        } else {
+            error('Failed to copy email. Please copy manually: ' + emailAddress, 'Copy Failed')
+        }
+    }
+}
 
 const subscribeNewsletter = () => {
     if (!email.value) {
@@ -184,7 +214,7 @@ const subscribeNewsletter = () => {
     gap: 1.5rem;
 }
 
-.contact-info p {
+.contact-item {
     margin: 0;
     font-size: 0.85rem;
     line-height: 1.2;
@@ -192,6 +222,23 @@ const subscribeNewsletter = () => {
     display: flex;
     font-weight: 600;
     align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.contact-item:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.contact-item:active {
+    transform: translateY(0);
 }
 
 .contact-info svg {
@@ -340,7 +387,7 @@ const subscribeNewsletter = () => {
         gap: 1.25rem;
     }
     
-    .contact-info p {
+    .contact-item {
         font-size: 0.8rem;
     }
     
@@ -418,7 +465,7 @@ const subscribeNewsletter = () => {
         align-items: center;
     }
     
-    .contact-info p {
+    .contact-item {
         justify-content: center;
     }
     
@@ -499,7 +546,7 @@ const subscribeNewsletter = () => {
         height: 26px;
     }
     
-    .contact-info p {
+    .contact-item {
         font-size: 0.75rem;
     }
     
@@ -585,7 +632,7 @@ const subscribeNewsletter = () => {
         height: 22px;
     }
     
-    .contact-info p {
+    .contact-item {
         font-size: 0.7rem;
     }
     

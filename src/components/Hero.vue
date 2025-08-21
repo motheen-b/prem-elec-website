@@ -234,6 +234,50 @@ import { clickToCall, openMap } from '@/composables/clickAction';
     transform: scale(1.1);
 }
 
+/* Facebook gradient */
+.social-link:first-child {
+    background: linear-gradient(135deg, #4267B2 0%, #365899 50%, #2d4a7a 100%);
+    border-color: #4267B2;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link:first-child::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+.social-link:first-child:hover {
+    background: linear-gradient(135deg, #365899 0%, #2d4a7a 50%, #1e3a5a 100%);
+    border-color: #365899;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(66, 103, 178, 0.3);
+}
+
+.social-link:first-child:hover::before {
+    transform: rotate(45deg) translateX(100%);
+}
+
+/* Instagram gradient */
+.social-link:last-child {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: #dc2743;
+}
+
+.social-link:last-child:hover {
+    background: linear-gradient(135deg, #e6683c 0%, #dc2743 25%, #cc2366 50%, #bc1888 75%, #a0176a 100%);
+    border-color: #cc2366;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(220, 39, 67, 0.3);
+}
+
 @media screen and (max-width: 769px) {
     .hero-container {
         padding: 1.5rem;

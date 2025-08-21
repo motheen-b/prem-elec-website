@@ -45,14 +45,6 @@
 
                 <!-- Details Section -->
                 <div class="details-section">
-                    <!-- Price Display -->
-                    <div class="price-display">
-                        <div class="price-main">
-                            <span class="price-amount">${{ price ? price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00' }}</span>
-                            <span class="price-label">Total Lot Price</span>
-                        </div>
-                    </div>
-
                     <!-- Quick Stats -->
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -66,6 +58,14 @@
                         <div class="stat-card">
                             <span class="stat-label">MSRP</span>
                             <span class="stat-value">{{ extractUnitsAndPricePerUnit(title, price).msrp === '?' ? 'N/A' : '$' + extractUnitsAndPricePerUnit(title, price).msrp.toLocaleString() }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Price Display -->
+                    <div class="price-display">
+                        <div class="price-main">
+                            <span class="price-amount">${{ price ? price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00' }}</span>
+                            <span class="price-label">Total Lot Price</span>
                         </div>
                     </div>
 
@@ -438,9 +438,13 @@ function extractUnitsAndPricePerUnit(title, price) {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 1rem;
+    padding: 0.75rem;
     text-align: center;
     transition: transform 0.2s ease;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .stat-card:hover {
@@ -456,6 +460,12 @@ function extractUnitsAndPricePerUnit(title, price) {
     text-transform: uppercase;
     letter-spacing: 0.025em;
     margin-bottom: 0.5rem;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    word-break: keep-all;
+    word-wrap: normal;
+    hyphens: none;
 }
 
 .stat-value {
@@ -467,7 +477,7 @@ function extractUnitsAndPricePerUnit(title, price) {
 
 /* Contact Section */
 .contact-section {
-    margin-top: 0.5rem;
+    margin-top: 0;
 }
 
 .contact-buttons {
@@ -688,11 +698,18 @@ function extractUnitsAndPricePerUnit(title, price) {
     }
 
     .stat-card {
-        padding: 0.75rem;
+        padding: 0.5rem;
+        min-height: 70px;
     }
 
     .stat-label {
         font-size: 0.6875rem;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        word-break: keep-all;
+        word-wrap: normal;
+        hyphens: none;
     }
 
     .stat-value {
@@ -812,12 +829,19 @@ function extractUnitsAndPricePerUnit(title, price) {
     }
 
     .stat-card {
-        padding: 0.5rem;
+        padding: 0.375rem;
+        min-height: 60px;
     }
 
     .stat-label {
         font-size: 0.625rem;
         margin-bottom: 0.25rem;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        word-break: keep-all;
+        word-wrap: normal;
+        hyphens: none;
     }
 
     .stat-value {
