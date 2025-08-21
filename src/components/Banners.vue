@@ -52,6 +52,7 @@ import { clickToCall } from '@/composables/clickAction';
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1rem;
 }
 
 /* Common Banner Styles */
@@ -167,6 +168,7 @@ import { clickToCall } from '@/composables/clickAction';
   .banners-wrapper {
     gap: 1rem;
     margin: 2.5rem 1rem;
+    padding: 0 1rem;
   }
   
   .banner-content {
@@ -192,6 +194,7 @@ import { clickToCall } from '@/composables/clickAction';
     grid-template-columns: 1fr;
     gap: 1rem;
     margin: 2rem 1rem;
+    padding: 0 1rem;
   }
   
   .banner-container {
@@ -240,6 +243,7 @@ import { clickToCall } from '@/composables/clickAction';
   .banners-wrapper {
     margin: 1.5rem 1rem;
     gap: 0.75rem;
+    padding: 0 1rem;
   }
   
   .banner-container {
@@ -275,6 +279,7 @@ import { clickToCall } from '@/composables/clickAction';
 @media (max-width: 360px) {
   .banners-wrapper {
     margin: 1rem 0.75rem;
+    padding: 0 0.75rem;
   }
   
   .banner-container {
